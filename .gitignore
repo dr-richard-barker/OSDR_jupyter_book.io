@@ -11,3 +11,5 @@ chapters/_build/
 # pybiomart query cache (regenerated when notebooks run)
 .pybiomart.sqlite
 **/.pybiomart.sqlite
+# stray artifact written by the knowledge-graph notebook
+chapters/knowledge graph-Factors-Omics.pdf

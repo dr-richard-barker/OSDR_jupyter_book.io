@@ -1,0 +1,218 @@
+[
+ {
+  "cond": "FLT",
+  "rep": "1",
+  "day": 3,
+  "geno": "Col-0",
+  "area_pct": 0.3061,
+  "n": 1,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0_root_FLT_Alight_Rep1_GSM2493777_Day03_image2.jpg"
+ },
+ {
+  "cond": "FLT",
+  "rep": "1",
+  "day": 6,
+  "geno": "Col-0-PhyD",
+  "area_pct": 0.0451,
+  "n": 0,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_FLT_Alight_Rep1_GSM2493783_Day06_image2.jpg"
+ },
+ {
+  "cond": "FLT",
+  "rep": "1",
+  "day": 9,
+  "geno": "Col-0-PhyD",
+  "area_pct": 0.3451,
+  "n": 7,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_FLT_Alight_Rep1_GSM2493783_Day09_image2.jpg"
+ },
+ {
+  "cond": "FLT",
+  "rep": "1",
+  "day": 13,
+  "geno": "Col-0-PhyD",
+  "area_pct": 0.289,
+  "n": 5,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_FLT_Alight_Rep1_GSM2493783_Day13_image2.jpg"
+ },
+ {
+  "cond": "FLT",
+  "rep": "2",
+  "day": 3,
+  "geno": "Col-0",
+  "area_pct": 0.239,
+  "n": 1,
+  "file": "LSDS-33_morphometric-photography_Atha_Ws_root_FLT_Alight_Rep2_GSM2493781_Day03_image2.jpg"
+ },
+ {
+  "cond": "FLT",
+  "rep": "2",
+  "day": 6,
+  "geno": "Col-0",
+  "area_pct": 0.1245,
+  "n": 2,
+  "file": "LSDS-33_morphometric-photography_Atha_Ws_root_FLT_Alight_Rep2_GSM2493781_Day06_image1.jpg"
+ },
+ {
+  "cond": "FLT",
+  "rep": "2",
+  "day": 9,
+  "geno": "Col-0",
+  "area_pct": 0.1633,
+  "n": 1,
+  "file": "LSDS-33_morphometric-photography_Atha_Ws_root_FLT_Alight_Rep2_GSM2493781_Day09_image1.jpg"
+ },
+ {
+  "cond": "FLT",
+  "rep": "2",
+  "day": 13,
+  "geno": "Col-0-PhyD",
+  "area_pct": 0.3341,
+  "n": 8,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_FLT_Alight_Rep2_GSM2493784_Day13_image2.jpg"
+ },
+ {
+  "cond": "FLT",
+  "rep": "3",
+  "day": 3,
+  "geno": "Col-0-PhyD",
+  "area_pct": 0.0,
+  "n": 0,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_FLT_Alight_Rep3_GSM2493785_Day03_image1.jpg"
+ },
+ {
+  "cond": "FLT",
+  "rep": "3",
+  "day": 6,
+  "geno": "Col-0-PhyD",
+  "area_pct": 0.2014,
+  "n": 1,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_FLT_Alight_Rep3_GSM2493785_Day06_image2.jpg"
+ },
+ {
+  "cond": "FLT",
+  "rep": "3",
+  "day": 9,
+  "geno": "Col-0",
+  "area_pct": 0.2014,
+  "n": 2,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0_root_FLT_Alight_Rep3_GSM2493779_Day09_image1.jpg"
+ },
+ {
+  "cond": "FLT",
+  "rep": "3",
+  "day": 13,
+  "geno": "Col-0-PhyD",
+  "area_pct": 0.1865,
+  "n": 1,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_FLT_Alight_Rep3_GSM2493785_Day13_image2.jpg"
+ },
+ {
+  "cond": "GC",
+  "rep": "1",
+  "day": 3,
+  "geno": "Col-0-PhyD",
+  "area_pct": 0.0871,
+  "n": 0,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_GC_Alight_Rep1_GSM2493765_Day03_image1.jpg"
+ },
+ {
+  "cond": "GC",
+  "rep": "1",
+  "day": 6,
+  "geno": "Col-0",
+  "area_pct": 0.3498,
+  "n": 6,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0_root_GC_Alight_Rep1_GSM2493759_Day06_image2.jpg"
+ },
+ {
+  "cond": "GC",
+  "rep": "1",
+  "day": 9,
+  "geno": "Col-0-PhyD",
+  "area_pct": 0.9743,
+  "n": 13,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_GC_Alight_Rep1_GSM2493765_Day09_image2.jpg"
+ },
+ {
+  "cond": "GC",
+  "rep": "1",
+  "day": 13,
+  "geno": "Col-0-PhyD",
+  "area_pct": 1.6329,
+  "n": 9,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_GC_Alight_Rep1_GSM2493765_Day13_image1.jpg"
+ },
+ {
+  "cond": "GC",
+  "rep": "2",
+  "day": 3,
+  "geno": "Col-0-PhyD",
+  "area_pct": 0.0724,
+  "n": 0,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_GC_Alight_Rep2_GSM2493766_Day03_image1.jpg"
+ },
+ {
+  "cond": "GC",
+  "rep": "2",
+  "day": 6,
+  "geno": "Col-0-PhyD",
+  "area_pct": 0.4863,
+  "n": 10,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_GC_Alight_Rep2_GSM2493766_Day06_image2.jpg"
+ },
+ {
+  "cond": "GC",
+  "rep": "2",
+  "day": 9,
+  "geno": "Col-0-PhyD",
+  "area_pct": 0.799,
+  "n": 12,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_GC_Alight_Rep2_GSM2493766_Day09_image2.jpg"
+ },
+ {
+  "cond": "GC",
+  "rep": "2",
+  "day": 13,
+  "geno": "Col-0-PhyD",
+  "area_pct": 1.4049,
+  "n": 9,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_GC_Alight_Rep2_GSM2493766_Day13_image2.jpg"
+ },
+ {
+  "cond": "GC",
+  "rep": "3",
+  "day": 3,
+  "geno": "Col-0-PhyD",
+  "area_pct": 0.0292,
+  "n": 0,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_GC_Alight_Rep3_GSM2493767_Day03_image1.jpg"
+ },
+ {
+  "cond": "GC",
+  "rep": "3",
+  "day": 6,
+  "geno": "Col-0-PhyD",
+  "area_pct": 0.4524,
+  "n": 8,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_GC_Alight_Rep3_GSM2493767_Day06_image2.jpg"
+ },
+ {
+  "cond": "GC",
+  "rep": "3",
+  "day": 9,
+  "geno": "Col-0-PhyD",
+  "area_pct": 0.7261,
+  "n": 11,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_GC_Alight_Rep3_GSM2493767_Day09_image2.jpg"
+ },
+ {
+  "cond": "GC",
+  "rep": "3",
+  "day": 13,
+  "geno": "Col-0-PhyD",
+  "area_pct": 1.3008,
+  "n": 10,
+  "file": "LSDS-33_morphometric-photography_Atha_Col-0-PhyD_root_GC_Alight_Rep3_GSM2493767_Day13_image2.jpg"
+ }
+]

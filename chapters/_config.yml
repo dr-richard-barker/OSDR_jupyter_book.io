@@ -24,6 +24,7 @@ exclude_patterns:
   - notebook_v1.ipynb
   - Introduction.md
   - README.md
+  - data_arabidopsis_microarray/*
 
 # Where the book lives on the web (powers the edit / issue / repo buttons)
 repository:

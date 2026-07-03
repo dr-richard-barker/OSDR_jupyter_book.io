@@ -461,6 +461,38 @@ cells.append(code(
 ))
 
 cells.append(md(
+    "### How the themes cluster",
+    "",
+    "Which of these processes are studied *together*? The heatmap below is the",
+    "**Jaccard overlap** between plant themes — the fraction of papers touching either",
+    "theme that touch both. Two clusters stand out and they are the two axes of the",
+    "spaceflight plant response: a **stress axis** (defence ↔ oxidative stress) and a",
+    "**mechanical-growth axis** (root / gravitropism ↔ cell wall). Transcriptomics",
+    "(*gene expression*) threads through everything as the common method.",
+))
+
+cells.append(code(
+    "# Jaccard co-occurrence of plant themes across the plant sub-corpus",
+    "theme_mat = pd.DataFrame({t: ptext.str.contains(p, regex=True).astype(int)",
+    "                          for t, p in PLANT_TOPICS.items()})",
+    "co = theme_mat.T.dot(theme_mat)                       # co-occurrence counts",
+    "tot = np.diag(co.values)",
+    "union = tot[:, None] + tot[None, :] - co.values",
+    "jac = np.divide(co.values, union, out=np.zeros_like(co.values, float), where=union > 0)",
+    "np.fill_diagonal(jac, np.nan)                          # blank the diagonal",
+    "labels = list(PLANT_TOPICS)",
+    "fig_co = go.Figure(go.Heatmap(",
+    "    z=jac, x=labels, y=labels, colorscale='Greens', zmin=0,",
+    "    colorbar=dict(title='Jaccard'),",
+    "    hovertemplate='%{y} + %{x}<br>Jaccard=%{z:.2f}<extra></extra>',",
+    "))",
+    "fig_co.update_layout(height=520, template='simple_white',",
+    "                     title='Plant-biology theme co-occurrence (Jaccard overlap)',",
+    "                     yaxis_autorange='reversed')",
+    "fig_co.show()",
+))
+
+cells.append(md(
     "### From literature to data",
     "",
     "The plant literature and the OSDR plant archive are two views of the same",

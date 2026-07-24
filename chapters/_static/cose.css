@@ -1,0 +1,21 @@
+/* COSE brand palette for the OSDR Jupyter Book (sphinx-book-theme / pydata).
+   Unifies accent colours with the CoSE family (radiation-page blue/teal) while
+   keeping the book's native left TOC, search and light/dark toggle, and the
+   GeneLab logo. Registered via html_css_files in _config.yml. */
+:root,
+html[data-theme="light"] {
+  --pst-color-primary:       #3B6EA5;
+  --pst-color-secondary:     #3FB6A8;
+  --pst-color-link:          #3B6EA5;
+  --pst-color-link-hover:    #2f5985;
+  --pst-color-accent:        #3FB6A8;
+  --pst-color-inline-code-links: #3B6EA5;
+}
+html[data-theme="dark"] {
+  --pst-color-primary:       #6ea3d8;
+  --pst-color-secondary:     #54c9ba;
+  --pst-color-link:          #6ea3d8;
+  --pst-color-link-hover:    #8fbbe4;
+  --pst-color-accent:        #54c9ba;
+  --pst-color-inline-code-links: #6ea3d8;
+}

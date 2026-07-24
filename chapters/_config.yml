@@ -36,6 +36,10 @@ html:
   use_issues_button: true
   use_repository_button: true
   use_edit_page_button: true
+  extra_footer: |
+    <p style="margin-top:8px">Part of the
+    <a href="https://cosecloud.com/">COSE</a> project family ·
+    <a href="https://cosecloud.com/">cosecloud.com</a></p>
 
 # Put a 🚀 "launch" menu on every notebook page so readers can run it live in
 # the cloud (no install) via Binder or Google Colab, or execute cells in-page.
@@ -56,6 +60,8 @@ parse:
 sphinx:
   config:
     nb_execution_allow_errors: true
+    html_static_path: ["_static"]
+    html_css_files: ["cose.css"]
     # The GitBook-exported reference chapters jump heading levels (H1 -> H3);
     # they render fine, so silence that cosmetic warning class.
     suppress_warnings:

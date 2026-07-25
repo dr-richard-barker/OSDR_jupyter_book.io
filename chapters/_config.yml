@@ -62,6 +62,9 @@ sphinx:
     nb_execution_allow_errors: true
     html_static_path: ["_static"]
     html_css_files: ["cose.css"]
+    html_js_files:
+      - https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/sites.js
+      - https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/cose-booknav.js
     # The GitBook-exported reference chapters jump heading levels (H1 -> H3);
     # they render fine, so silence that cosmetic warning class.
     suppress_warnings:

@@ -36,6 +36,17 @@ jobs:
       - name: Build the book
         run: jupyter-book build chapters/
 
+      # The generated root index.html is a bare meta-refresh to intro.html that
+      # drops the query string. Rewrite it to forward ?cose_scope=… (and hash)
+      # so a scoped hub link (e.g. ?cose_scope=deepspaceag) reaches the book.
+      - name: Preserve query string on root redirect
+        run: |
+          printf '%s\n' \
+            '<!doctype html><meta charset="utf-8"><title>Redirecting…</title>' \
+            '<script>location.replace("intro.html"+location.search+location.hash)</script>' \
+            '<noscript><meta http-equiv="refresh" content="0; url=intro.html"></noscript>' \
+            > chapters/_build/html/index.html
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

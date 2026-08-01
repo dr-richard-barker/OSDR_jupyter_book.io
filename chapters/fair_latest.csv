@@ -156,9 +156,6 @@ OSD-161,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-162,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-163,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-164,Mus musculus,100.0,100.0,100.0,75.0,93.8
-OSD-165,Caenorhabditis elegans,100.0,100.0,100.0,75.0,93.8
-OSD-166,Caenorhabditis elegans,100.0,100.0,100.0,50.0,87.5
-OSD-167,Caenorhabditis elegans,100.0,100.0,100.0,75.0,93.8
 OSD-168,Mus musculus,100.0,100.0,75.0,75.0,87.5
 OSD-170,cellular organisms,100.0,100.0,100.0,75.0,93.8
 OSD-172,Homo sapiens,100.0,100.0,100.0,75.0,93.8
@@ -192,14 +189,12 @@ OSD-209,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-210,Arabidopsis thaliana,100.0,100.0,100.0,75.0,93.8
 OSD-211,Mus musculus,100.0,100.0,100.0,50.0,87.5
 OSD-212,Microbiota,100.0,100.0,75.0,75.0,87.5
-OSD-213,Arabidopsis thaliana,100.0,100.0,100.0,75.0,93.8
 OSD-214,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-215,Bacillus subtilis,100.0,100.0,75.0,75.0,87.5
 OSD-216,Bacillus subtilis,100.0,100.0,75.0,75.0,87.5
 OSD-217,Arabidopsis thaliana,100.0,100.0,100.0,75.0,93.8
 OSD-218,Arabidopsis thaliana,100.0,100.0,100.0,50.0,87.5
 OSD-219,,0.0,66.7,0.0,0.0,16.7
-OSD-220,Arabidopsis thaliana,100.0,100.0,100.0,75.0,93.8
 OSD-222,Mus musculus,100.0,100.0,100.0,50.0,87.5
 OSD-223,Arabidopsis thaliana,100.0,100.0,100.0,75.0,93.8
 OSD-224,Microbiota,100.0,100.0,100.0,75.0,93.8
@@ -245,18 +240,17 @@ OSD-269,Microbiota,100.0,100.0,100.0,75.0,93.8
 OSD-270,Mus musculus,100.0,100.0,100.0,50.0,87.5
 OSD-271,Rattus norvegicus,100.0,100.0,100.0,75.0,93.8
 OSD-272,Mus musculus,100.0,100.0,75.0,50.0,81.2
-OSD-273,Mus musculus,100.0,100.0,75.0,25.0,75.0
+OSD-273,Mus musculus,100.0,100.0,75.0,50.0,81.2
 OSD-274,Mus musculus,100.0,100.0,75.0,25.0,75.0
 OSD-275,Rattus norvegicus,100.0,100.0,100.0,75.0,93.8
 OSD-276,cellular organisms,100.0,100.0,100.0,75.0,93.8
 OSD-277,Not Applicable,100.0,100.0,100.0,75.0,93.8
 OSD-278,Drosophila melanogaster,100.0,100.0,100.0,75.0,93.8
 OSD-279,cellular organisms,100.0,100.0,100.0,75.0,93.8
-OSD-280,cellular organisms,100.0,100.0,100.0,75.0,93.8
+OSD-280,Microbiota,100.0,100.0,100.0,75.0,93.8
 OSD-281,Arabidopsis thaliana,100.0,100.0,100.0,75.0,93.8
 OSD-282,Arabidopsis thaliana,100.0,100.0,100.0,75.0,93.8
 OSD-283,Homo sapiens,100.0,100.0,100.0,75.0,93.8
-OSD-284,Oryza sativa,100.0,100.0,75.0,75.0,87.5
 OSD-285,Homo sapiens,100.0,100.0,100.0,75.0,93.8
 OSD-286,Microbiota,100.0,100.0,100.0,75.0,93.8
 OSD-287,Mus musculus,100.0,100.0,100.0,75.0,93.8
@@ -279,7 +273,6 @@ OSD-304,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-305,Serratia liquefaciens,100.0,100.0,100.0,75.0,93.8
 OSD-306,Agrobacterium genomosp. 3,100.0,100.0,100.0,75.0,93.8
 OSD-307,Microbiota,100.0,100.0,75.0,75.0,87.5
-OSD-308,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-309,Klebsiella quasipneumoniae,100.0,100.0,100.0,25.0,81.2
 OSD-310,Rattus norvegicus,100.0,100.0,100.0,75.0,93.8
 OSD-311,Enterobacter bugandensis,100.0,100.0,100.0,25.0,81.2
@@ -314,7 +307,6 @@ OSD-351,Rattus norvegicus,100.0,100.0,100.0,75.0,93.8
 OSD-352,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-353,Homo sapiens,100.0,100.0,100.0,50.0,87.5
 OSD-354,Homo sapiens,100.0,100.0,100.0,75.0,93.8
-OSD-355,Homo sapiens,100.0,100.0,100.0,75.0,93.8
 OSD-356,Vibrio fischeri,100.0,100.0,100.0,75.0,93.8
 OSD-358,Burkholderia contaminans,100.0,100.0,100.0,75.0,93.8
 OSD-359,Homo sapiens,100.0,100.0,100.0,50.0,87.5
@@ -329,7 +321,6 @@ OSD-368,Homo sapiens,100.0,100.0,100.0,25.0,81.2
 OSD-369,Homo sapiens,100.0,100.0,100.0,25.0,81.2
 OSD-370,Homo sapiens,100.0,100.0,100.0,50.0,87.5
 OSD-372,Staphylococcus auricularis,100.0,100.0,100.0,75.0,93.8
-OSD-373,Danio rerio,100.0,100.0,100.0,75.0,93.8
 OSD-374,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-375,Brachypodium distachyon,100.0,100.0,100.0,50.0,87.5
 OSD-379,Mus musculus,100.0,100.0,100.0,50.0,87.5
@@ -351,7 +342,6 @@ OSD-411,Arabidopsis thaliana,100.0,100.0,100.0,50.0,87.5
 OSD-412,Microbiota,100.0,100.0,75.0,75.0,87.5
 OSD-413,Microbiota,100.0,100.0,75.0,75.0,87.5
 OSD-414,Microbiota,100.0,100.0,75.0,75.0,87.5
-OSD-415,Rattus norvegicus,100.0,100.0,100.0,75.0,93.8
 OSD-416,Arabidopsis thaliana,100.0,100.0,100.0,75.0,93.8
 OSD-417,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-418,Rattus norvegicus,100.0,100.0,100.0,50.0,87.5
@@ -381,7 +371,6 @@ OSD-464,Mus musculus,100.0,100.0,100.0,50.0,87.5
 OSD-465,Microbiota,100.0,100.0,100.0,50.0,87.5
 OSD-466,Microbiota,100.0,100.0,100.0,50.0,87.5
 OSD-467,Mus musculus,100.0,100.0,100.0,75.0,93.8
-OSD-469,Arabidopsis thaliana,100.0,100.0,100.0,75.0,93.8
 OSD-470,Klebsiella quasipneumoniae subsp. similipneumoniae,100.0,100.0,100.0,75.0,93.8
 OSD-471,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-476,Arabidopsis thaliana,100.0,100.0,100.0,75.0,93.8
@@ -428,9 +417,7 @@ OSD-536,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-539,Homo sapiens,100.0,100.0,100.0,75.0,93.8
 OSD-540,Homo sapiens,100.0,100.0,100.0,75.0,93.8
 OSD-542,Homo sapiens,100.0,100.0,100.0,50.0,87.5
-OSD-545,Homo sapiens,100.0,100.0,100.0,75.0,93.8
 OSD-546,Homo sapiens,100.0,100.0,100.0,75.0,93.8
-OSD-547,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-548,Mus musculus,100.0,100.0,100.0,50.0,87.5
 OSD-554,Pseudomonas aeruginosa,100.0,100.0,75.0,75.0,87.5
 OSD-557,Mus musculus,100.0,100.0,100.0,75.0,93.8
@@ -534,7 +521,7 @@ OSD-767,Solanum lycopersicum,100.0,100.0,75.0,75.0,87.5
 OSD-770,Mus musculus,100.0,100.0,75.0,50.0,81.2
 OSD-771,Mus musculus,100.0,100.0,100.0,50.0,87.5
 OSD-772,Microbiota,100.0,100.0,75.0,50.0,81.2
-OSD-773,Microbiota,100.0,100.0,75.0,50.0,81.2
+OSD-773,Microbiota,100.0,100.0,75.0,75.0,87.5
 OSD-776,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-777,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-778,Mus musculus,100.0,100.0,100.0,75.0,93.8
@@ -554,6 +541,10 @@ OSD-810,Paraburkholderia phymatum,100.0,100.0,100.0,75.0,93.8
 OSD-811,Homo sapiens,100.0,100.0,100.0,75.0,93.8
 OSD-812,Homo sapiens,100.0,100.0,100.0,75.0,93.8
 OSD-813,Mus musculus,100.0,100.0,100.0,75.0,93.8
+OSD-815,Homo sapiens,100.0,100.0,75.0,75.0,87.5
+OSD-816,Homo sapiens,100.0,100.0,75.0,75.0,87.5
+OSD-817,Homo sapiens,100.0,100.0,75.0,75.0,87.5
+OSD-818,Homo sapiens,100.0,100.0,75.0,75.0,87.5
 OSD-824,Adineta vaga,100.0,100.0,75.0,75.0,87.5
 OSD-825,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-832,Homo sapiens,100.0,100.0,75.0,75.0,87.5
@@ -562,7 +553,6 @@ OSD-834,Homo sapiens,100.0,100.0,75.0,75.0,87.5
 OSD-835,Rattus norvegicus,100.0,100.0,75.0,75.0,87.5
 OSD-836,Rattus norvegicus,100.0,100.0,75.0,75.0,87.5
 OSD-837,Rattus norvegicus,100.0,100.0,75.0,75.0,87.5
-OSD-840,Mus musculus,100.0,100.0,100.0,25.0,81.2
 OSD-855,Lactuca sativa,100.0,100.0,100.0,50.0,87.5
 OSD-856,Lactuca sativa,100.0,100.0,100.0,75.0,93.8
 OSD-863,Homo sapiens,100.0,100.0,100.0,75.0,93.8
@@ -640,3 +630,5 @@ OSD-992,Homo sapiens,100.0,100.0,100.0,75.0,93.8
 OSD-993,Homo sapiens,100.0,100.0,100.0,75.0,93.8
 OSD-998,Homo sapiens,100.0,100.0,100.0,75.0,93.8
 OSD-999,Homo sapiens,100.0,100.0,100.0,75.0,93.8
+OSD-1000,Homo sapiens,100.0,100.0,100.0,75.0,93.8
+OSD-1005,Homo sapiens,100.0,100.0,100.0,75.0,93.8

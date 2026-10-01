@@ -403,6 +403,7 @@ OSD-512,Mus musculus,100.0,100.0,100.0,50.0,87.5
 OSD-513,Mus musculus,100.0,100.0,100.0,50.0,87.5
 OSD-514,Drosophila melanogaster,100.0,100.0,100.0,75.0,93.8
 OSD-515,Mus musculus,100.0,100.0,100.0,50.0,87.5
+OSD-516,Homo sapiens,100.0,100.0,75.0,75.0,87.5
 OSD-518,Arabidopsis thaliana,100.0,100.0,100.0,75.0,93.8
 OSD-519,Arabidopsis thaliana,100.0,100.0,100.0,75.0,93.8
 OSD-520,Arabidopsis thaliana,100.0,100.0,100.0,75.0,93.8
@@ -433,7 +434,7 @@ OSD-570,Homo sapiens,100.0,100.0,75.0,75.0,87.5
 OSD-571,Homo sapiens,100.0,100.0,75.0,75.0,87.5
 OSD-572,Microbiota,100.0,100.0,75.0,75.0,87.5
 OSD-573,Microbiota,100.0,100.0,75.0,75.0,87.5
-OSD-574,Homo sapiens,100.0,100.0,75.0,75.0,87.5
+OSD-574,Microbiota,100.0,100.0,75.0,75.0,87.5
 OSD-575,Homo sapiens,100.0,100.0,75.0,75.0,87.5
 OSD-576,Mus musculus,100.0,100.0,100.0,50.0,87.5
 OSD-577,Homo sapiens,100.0,100.0,75.0,75.0,87.5
@@ -566,6 +567,7 @@ OSD-881,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-883,Brassica oleracea,100.0,100.0,100.0,50.0,87.5
 OSD-888,Mus musculus,100.0,100.0,100.0,75.0,93.8
 OSD-890,Not Applicable,100.0,100.0,75.0,50.0,81.2
+OSD-895,Lactuca sativa,100.0,100.0,75.0,75.0,87.5
 OSD-896,Rattus norvegicus,100.0,100.0,75.0,75.0,87.5
 OSD-897,Rattus norvegicus,100.0,100.0,75.0,75.0,87.5
 OSD-898,Mus musculus,100.0,100.0,100.0,75.0,93.8
@@ -624,6 +626,8 @@ OSD-977,Rattus norvegicus,100.0,100.0,75.0,75.0,87.5
 OSD-979,Mus musculus,100.0,100.0,75.0,75.0,87.5
 OSD-980,Mus musculus,100.0,100.0,75.0,75.0,87.5
 OSD-981,Mus musculus,100.0,100.0,75.0,75.0,87.5
+OSD-984,Mus musculus,100.0,100.0,75.0,75.0,87.5
+OSD-987,Streptococcus mutans,100.0,100.0,75.0,75.0,87.5
 OSD-990,Homo sapiens,100.0,100.0,100.0,75.0,93.8
 OSD-992,Homo sapiens,100.0,100.0,100.0,75.0,93.8
 OSD-993,Homo sapiens,100.0,100.0,100.0,75.0,93.8
@@ -632,3 +636,6 @@ OSD-999,Homo sapiens,100.0,100.0,100.0,75.0,93.8
 OSD-1000,Homo sapiens,100.0,100.0,100.0,75.0,93.8
 OSD-1005,Homo sapiens,100.0,100.0,100.0,75.0,93.8
 OSD-1008,Homo sapiens,100.0,100.0,100.0,75.0,93.8
+OSD-1012,Homo sapiens,100.0,100.0,100.0,75.0,93.8
+OSD-1014,Homo sapiens,100.0,100.0,100.0,75.0,93.8
+OSD-1015,Homo sapiens,100.0,100.0,100.0,75.0,93.8

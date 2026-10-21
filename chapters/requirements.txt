@@ -9,3 +9,7 @@ pandas
 requests
 plotly
 scikit-learn
+
+# CI re-executes OSDR_fair_over_time.ipynb before building (see static.yml)
+nbconvert
+ipykernel

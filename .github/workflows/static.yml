@@ -5,6 +5,11 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  # The monthly FAIR snapshot commits with GITHUB_TOKEN, which never fires a
+  # push event — so rebuild whenever that workflow finishes.
+  workflow_run:
+    workflows: ["Monthly FAIR snapshot"]
+    types: [completed]
 
 permissions:
   contents: read
@@ -17,13 +22,14 @@ concurrency:
 
 jobs:
   build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.11"
           cache: pip
@@ -32,6 +38,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r chapters/requirements.txt
+
+      # The book builds with execute_notebooks off, so re-run the one notebook
+      # that only reads committed CSVs; its charts then cover every row of
+      # fair_history.csv instead of whatever was saved at last local run.
+      - name: Refresh the FAIR-over-time notebook
+        run: jupyter nbconvert --to notebook --execute --inplace chapters/OSDR_fair_over_time.ipynb
 
       - name: Build the book
         run: jupyter-book build chapters/
@@ -48,7 +60,7 @@ jobs:
             > chapters/_build/html/index.html
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: chapters/_build/html
 
@@ -61,4 +73,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

@@ -2,7 +2,7 @@
 
 ### Open Science Abbreviations <a href="#qajl9nudnnw8" id="qajl9nudnnw8"></a>
 
-[For more information, this website is a valuable resource when looking up any NASA-specific acronyms](https://www9.jsc.nasa.gov/AcronymCentral/scripts/index.cfm).
+For NASA-specific acronyms, JSC's AcronymCentral site (`www9.jsc.nasa.gov/AcronymCentral`) used to be a valuable resource (link no longer available).
 
 #### General Abbreviations <a href="#f85u4statarl" id="f85u4statarl"></a>
 

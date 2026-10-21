@@ -9,7 +9,11 @@ description: >-
 
 ### The Environmental Data Application (EDA App) <a href="#fu5jvh1nxmbu" id="fu5jvh1nxmbu"></a>
 
-{% embed url="https://visualization.osdr.nasa.gov/eda/" %}
+```{button-link} https://visualization.osdr.nasa.gov/eda/
+:color: primary
+:outline:
+Open the Environmental Data Application (EDA)
+```
 
 The Environmental Data Application (EDA) provides users with convenient access to valuable data collected during space biology missions. The environmental data it serves — radiation, temperature, humidity, CO2, and spacecraft telemetry — characterizes the spaceflight environment experienced by *every* payload aboard a given mission. Because that environment is shared by all organisms flown together, these data are just as relevant to plant experiments (such as the *Arabidopsis thaliana* CARA study, OSD-120, and the APEX series) as to any other organism. The application facilitates the exploration and analysis of this scientific data, offering a comprehensive view of the mission details, telemetry information, and relevant radiation-related metadata that researchers can use to interpret how spaceflight conditions shaped their biological results.
 

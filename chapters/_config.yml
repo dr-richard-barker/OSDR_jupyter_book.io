@@ -28,7 +28,7 @@ exclude_patterns:
 
 # Where the book lives on the web (powers the edit / issue / repo buttons)
 repository:
-  url: https://github.com/dr-richard-barker/OSDR_juypter_book.io
+  url: https://github.com/dr-richard-barker/OSDR_jupyter_book.io
   path_to_book: chapters
   branch: main
 
@@ -63,8 +63,8 @@ sphinx:
     html_static_path: ["_static"]
     html_css_files: ["cose.css"]
     html_js_files:
-      - https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/sites.js
-      - https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/cose-booknav.js
+      # Portfolio-wide visitor analytics (the script honours Do Not Track).
+      - ["https://visitor-analytics.astrobotany.workers.dev/a.js", {"defer": "defer"}]
     # The GitBook-exported reference chapters jump heading levels (H1 -> H3);
     # they render fine, so silence that cosmetic warning class.
     suppress_warnings:

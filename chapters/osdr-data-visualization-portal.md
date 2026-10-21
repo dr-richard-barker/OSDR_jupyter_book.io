@@ -9,22 +9,28 @@ description: >-
 
 [Link to Data Visualization Portal](https://visualization.genelab.nasa.gov/data/) ([https://visualization.genelab.nasa.gov/data/](https://visualization.genelab.nasa.gov/data/))
 
-{% embed url="https://visualization.genelab.nasa.gov/data/" %}
+```{button-link} https://visualization.genelab.nasa.gov/data/
+:color: primary
+:outline:
+Open the Data Visualization Portal
+```
+
 The portal encompasses various visualization types, including Gene Expression query tables, Dendrograms, Heatmaps, Ideogram, Gene Set Enrichment Analysis (GSEA) and interactive plots including PCA, Pair, and Volcano plots. Each tool offers the flexibility to adjust parameters and explore specific aspects of the data.
-{% endembed %}
 
 * The OSDR has many data visualization tools suitable for multiple applications and stakeholders.&#x20;
   * **Data & Tools: Use the dropdown menu to access the** “[Data Visualization](https://visualization.genelab.nasa.gov/data/)” hyperlink to open the OSDR multi-study data visualization application.
 
-[Link to detailed Multi-study visualization tutorial](https://genelab.nasa.gov/sites/default/files/2024-03/Data%20Visualization%20Portal%20JT\_AU.pdf)
-
-{% embed url="https://genelab.nasa.gov/sites/default/files/2024-03/Data%20Visualization%20Portal%20JT_AU.pdf" %}
+[Link to detailed Multi-study visualization tutorial (PDF)](https://web.archive.org/web/20240615223406/https://genelab.nasa.gov/sites/default/files/2024-03/Data%20Visualization%20Portal%20JT_AU.pdf) — *Data Visualization Portal Tutorial*, J. Davis and A. Uriarte-Acuna. The original genelab.nasa.gov copy is no longer available (it now redirects to a NASA landing page), so this links to the Internet Archive's copy from June 2024.
 
 ### **Metadata Dashboard** <a href="#id-18i9g98tw37j" id="id-18i9g98tw37j"></a>
 
 [Link to Metadata Dashboard](https://visualization.genelab.nasa.gov/data/)
 
-{% embed url="https://visualization.genelab.nasa.gov/data/" %}
+```{button-link} https://visualization.genelab.nasa.gov/data/
+:color: primary
+:outline:
+Open the Metadata Dashboard
+```
 
 **The metadata dashboard is designed to help users narrow search results for experimental data. It provides various tools for filtering and displaying results.**
 

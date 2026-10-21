@@ -9,7 +9,16 @@ description: >-
 
 **Please follow this link to access the** [**RadLab OSDR Visualization application**](https://visualization.osdr.nasa.gov/radlab/gui/data-overview/)**.**
 
-{% embed url="https://visualization.osdr.nasa.gov/radlab/gui/data-overview/" %}
+```{button-link} https://visualization.osdr.nasa.gov/radlab/gui/data-overview/
+:color: primary
+:outline:
+Open the RadLab application
+```
+
+```{note}
+When this page was last checked (21 October 2026) the RadLab application was
+returning a server error (HTTP 500). If the link fails, try again later.
+```
 
 The application provides a central repository for radiation data from a wide variety of sensors that have flown on various spacecraft. This makes it easy for users to find and access the data they need, regardless of the specific sensor or spacecraft that collected it.
 
@@ -47,11 +56,11 @@ To make the RadLab overview more useful, this book includes a companion executed
 
 View the interactive notebook in the book:
 
-[Open the RadLab radiation notebook — "Radiation environment of OSDR astrobotany missions"](OSDR_radlab_astrobotany.html)
+[Open the RadLab radiation notebook — "Radiation environment of OSDR astrobotany missions"](OSDR_radlab_astrobotany.ipynb)
 
-You can also embed the notebook page here (if your site allows iframes):
+The same page, embedded:
 
-<iframe src="/OSDR_radlab_astrobotany.html" width="100%" height="800" style="border:1px solid #ddd"></iframe>
+<iframe src="OSDR_radlab_astrobotany.html" width="100%" height="800" style="border:1px solid #ddd"></iframe>
 
 Notes for maintainers and contributors
 
@@ -65,5 +74,3 @@ jupyter nbconvert --to notebook --execute chapters/OSDR_radlab_astrobotany.ipynb
 2. The notebook uses Plotly for interactive figures. When executed in the jupyter-book build environment you may need to ensure the renderer is appropriate for your build environment (the notebook currently sets `pio.renderers.default = 'notebook_connected'`).
 
 3. If you prefer static PNG/SVG figures for CI or static builds, execute the notebook and save static images from the Plotly objects (the notebook includes commented examples for exporting static figures).
-
-If you'd like, I can (a) execute the notebook in the repository and commit the updated notebook with outputs, or (b) modify this page to include a few inline static example images generated from RadLab telemetry. Which would you prefer?

@@ -7,7 +7,7 @@ An interactive [Jupyter Book](https://jupyterbook.org/) that turns NASA's
 all built live on the public
 [OSDR biodata API](https://visualization.osdr.nasa.gov/biodata/api/).
 
-- **Repository:** https://github.com/dr-richard-barker/OSDR_juypter_book.io
+- **Repository:** https://github.com/dr-richard-barker/OSDR_jupyter_book.io
 - **Book source:** [`chapters/`](chapters/) (classic Jupyter Book v1)
 - **API backbone:** `https://visualization.osdr.nasa.gov/biodata/api/v2/`
 - **Author:** Richard Barker and the OSDR team
@@ -118,7 +118,7 @@ experiment** ([OSD-120](https://osdr.nasa.gov/bio/repo/data/studies/OSD-120),
 
 - **Book root is [`chapters/`](chapters/)** — content *and* sample data live there; build with `jupyter-book build chapters/`.
 - **Classic Jupyter Book v1** (Sphinx / `jb-book`). ⚠️ v2 is a different MyST/Node tool and is incompatible — keep `jupyter-book<2`.
-- **Notebooks are NOT executed in CI** (`execute_notebooks: off`) — they ship with saved outputs; refresh locally.
+- **Notebooks are NOT executed in CI** (`execute_notebooks: off`) — they ship with saved outputs; refresh locally. The one exception is `OSDR_fair_over_time.ipynb`, which CI re-runs before every build (it only reads the committed FAIR CSVs), and the book also rebuilds after each monthly FAIR snapshot.
 - **Notebooks are generated from `_make_*.py` scripts** (the reproducible source of truth). To change a generated notebook, edit its `_make_*.py`, re-run it, then `jupyter nbconvert --execute`.
 - **Interactive charts use Plotly** (`notebook_connected` renderer) so they survive in static HTML; large scatters are sampled + WebGL.
 - **Functional enrichment uses the free [g:Profiler](https://biit.cs.ut.ee/gprofiler/) API** (`athaliana`, `slycopersicum`) — `requests` only, no key.

@@ -13,3 +13,6 @@ chapters/_build/
 **/.pybiomart.sqlite
 # stray artifact written by the knowledge-graph notebook
 chapters/knowledge graph-Factors-Omics.pdf
+
+# /abai check attestation (local only)
+.abai/

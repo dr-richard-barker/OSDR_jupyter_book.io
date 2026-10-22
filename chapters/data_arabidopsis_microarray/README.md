@@ -8,7 +8,8 @@ Data backing `OSDR_arabidopsis_microarray.ipynb`.
   metadata API (`/query/metadata/` and `/dataset/<acc>/`).
 - **`de_embed.json`** — pre-computed differential-expression meta-analysis for
   the six spaceflight datasets with a clean wild-type Space-Flight vs
-  Ground-Control contrast (OSD-44, 121, 147, 205, 213, 469). Per-study DE
+  Ground-Control contrast (OSD-44, 121, 147, 205, 213, 469; OSD-213 and OSD-469
+  no longer resolve in the OSDR APIs as of 2026-10-22). Per-study DE
   counts, cross-study locus recurrence, a log2FC heatmap matrix for the top
   recurrent loci, and the consistent-direction core.
 - **`collect_de.py`** — the collector that produced `de_embed.json`. It

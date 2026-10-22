@@ -445,7 +445,7 @@ quantitative host↔microbe correlations.
 ---
 
 **Sources:** [VEG-05 Microbiome — NASA NTRS 20240016407](https://ntrs.nasa.gov/citations/20240016407) ·
-[VEG-05 transcriptome — BMC Plant Biology 2025](https://doi.org/10.1186/s12870-025-07621-4) ·
+[VEG-05 transcriptome — BMC Plant Biology 2026](https://doi.org/10.1186/s12870-025-07621-4) ·
 [OSD-767 (host RNA-seq)](https://osdr.nasa.gov/bio/repo/data/studies/OSD-767) ·
 [OSD-766 (microbiome)](https://osdr.nasa.gov/bio/repo/data/studies/OSD-766)""")
 

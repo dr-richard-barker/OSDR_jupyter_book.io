@@ -386,7 +386,7 @@ chapter is to reach that shortlist quickly and transparently.
 - VEG-05 microbiome: *The microbiome of a tomato crop grown under different lighting
   regimes on the ISS.* NASA NTRS 20240016407.
 - VEG-05 transcriptome: *Stress and light spectral quality influence the transcriptome of a
-  tomato crop on the ISS.* *BMC Plant Biology* (2025).
+  tomato crop on the ISS.* *BMC Plant Biology* (2026).
   <https://doi.org/10.1186/s12870-025-07621-4>
 
 ---

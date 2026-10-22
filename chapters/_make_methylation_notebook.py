@@ -15,7 +15,8 @@ The [data story](OSDR_data_story.ipynb) ended at a frontier: spaceflight changes
 which genes are *expressed*, but does it also change how the genome is
 *chemically marked*? **OSD-217 is the dataset that lets us answer this** — it
 measured **whole-genome DNA methylation (WGBS) *and* RNA-seq on the same
-*Arabidopsis* root spaceflight experiment**.
+*Arabidopsis* spaceflight experiment**. The methylation tables used here are from
+roots; the RNA-seq contrast pools roots and leaves (3 + 3 samples per arm).
 
 Plants methylate DNA in three sequence contexts — **CG, CHG, CHH** — each with
 different biology. Here we:
@@ -78,7 +79,9 @@ fig.show()''')
 md("""## 2. Matched spaceflight expression change (RNA-seq)
 
 The same study's RNA-seq, summarised as a per-gene spaceflight log₂ fold-change —
-exactly as in the cross-study data story, but for OSD-217 alone.""")
+exactly as in the cross-study data story, but for OSD-217 alone. It pools the
+study's root and leaf samples (3 + 3 per arm), so unlike the methylation tables it
+is not root-specific.""")
 
 code('''def normalized_counts(acc):
     d = requests.get(f"{API}/dataset/{acc}/files/", timeout=60).json()
@@ -209,10 +212,11 @@ Two messages stand out. First, the **near-zero global coupling** is itself a res
 spaceflight doesn't simply methylate genes down and de-methylate genes up, so the
 interesting biology is **not** in the genome-wide trend but in the **specific genes**
 coordinated across both layers. Second, those coordinated genes are strikingly
-enriched for **photosynthesis and light-harvesting** — in *roots*, which are normally
-non-photosynthetic. That points to spaceflight perturbing the plant's **light/energy
-programme** (echoing the disorganised root–light responses seen in other spaceflight
-studies), now visible as a *joint* epigenetic-and-transcriptional event. These
+enriched for **photosynthesis and light-harvesting**. The methylation change is
+measured in roots, but the expression change pools roots and leaves, so this does
+not show that roots switch on photosynthesis genes: the leaf samples could carry the
+expression signal. It does suggest that spaceflight touches the plant's
+**light/energy programme** in both layers. These
 multi-omic hits are concrete candidates for how a plant might **stabilise a
 spaceflight response with an epigenetic mark**.
 
@@ -222,7 +226,8 @@ spaceflight response with an epigenetic mark**.
   `AvgDiffMeth` is averaged over each gene, hiding position-specific methylation.
 - **Correlation, not mechanism** — co-occurrence in both layers doesn't establish
   that methylation *drives* expression (or vice versa).
-- **Context** — results are for *Arabidopsis* roots; other tissues may differ.
+- **Mixed tissues** — methylation is from roots, while the expression contrast pools
+  roots and leaves; a root-only expression contrast is the obvious next test.
 
 ### Conclusion
 

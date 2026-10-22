@@ -223,9 +223,10 @@ specifically enriched **nitrogen-fixing / plant-growth-promoting** genera, with 
 *Rhizobium*- and *Burkholderia*-clades **>8-fold higher in flight**. Those are
 exactly the rhizosphere partners a plant recruits and signals to with
 **flavonoids and phenylpropanoids** — the very pathways the host **root**
-transcriptome up-regulates in spaceflight (section 4). So the two independent
-datasets point the same way: *flight reshapes the root microbiome toward PGPR
-partners, and the host root turns on the chemistry that engages them.*""")
+transcriptome changes most in spaceflight (section 4; that enrichment covers the
+strongest changes in either direction). So the two independent datasets point the
+same way: *flight reshapes the root microbiome toward PGPR partners, and the host
+root reshapes the chemistry that engages them.*""")
 
 md(r"""## 4. Connecting the two layers
 
@@ -309,8 +310,8 @@ else:
 md(r"""## 5. Does the flight microbiome meet the host response?
 
 Section 3 showed *which* microbes shift in spaceflight; section 4 showed *what
-functions* the host root turns on. The natural question is whether the two **meet** —
-do the flight-enriched microbes engage the very pathways the host up-regulates? Here
+functions* the host root changes. The natural question is whether the two **meet** —
+do the flight-enriched microbes engage the very pathways the host changes? Here
 we line them up and flag the **documented plant–microbe interactions**.""")
 
 code('''# The host functional axes that came out of the spaceflight enrichment (section 4)
@@ -360,7 +361,7 @@ exactly the group (*Rhizobium*- and *Burkholderia*-clades, *Azospirillum*) the f
 microbiome is enriched for (section 3). A second meeting point is **ROS / redox /
 defence**, which plants use to *tune* microbial colonisation at the root surface. So
 the answer to the section title is **yes**: the flight-shifted community is dominated by
-microbes that interact with precisely the functions the host turns on — with the
+microbes that interact with precisely the functions the host changes — with the
 **rhizobia ↔ flavonoid** link as the clearest hub.
 
 ```{admonition} How to read this
@@ -382,8 +383,8 @@ md(r"""## 6. Results and discussion
   **organ-specific**: the root and leaf spaceflight responses were only **weakly
   correlated** (section 2). Roots — the rhizosphere interface — carried the most
   distinct signal.
-- **The host root turns on microbe-facing chemistry.** Enrichment of the top
-  spaceflight-responsive root genes (section 4) was dominated by **phenylpropanoid
+- **The host root shifts microbe-facing chemistry.** Enrichment of the 200 most
+  strongly changed root genes, in either direction (section 4), was dominated by **phenylpropanoid
   biosynthesis** (KEGG, *p* ≈ 3×10⁻⁵), **flavonoid biosynthesis** (*p* ≈ 1×10⁻³),
   **secondary-metabolite biosynthesis**, and **reactive-oxygen-species / H₂O₂
   metabolism** — the classic chemistry of plant defence and plant–microbe signalling.
@@ -400,19 +401,19 @@ md(r"""## 6. Results and discussion
   host's enriched functions (section 5), both converge on the **flavonoid /
   phenylpropanoid (rhizobia-recruitment) axis** and on **ROS / defence** — the flight
   microbiome is dominated by genera that interact with exactly the pathways the host
-  turns on.
+  changes.
 
 ### Discussion
 
 The two independent datasets tell a **coherent story**. Spaceflight enriched the
 root microbiome for **nitrogen-fixing / plant-growth-promoting (PGPR)** bacteria,
-and the host **root simultaneously up-regulated the flavonoid and phenylpropanoid
-pathways** — the very molecules plants secrete to recruit and signal to rhizosphere
+and the host **root's flavonoid and phenylpropanoid pathways were among the most
+changed** — the very molecules plants secrete to recruit and signal to rhizosphere
 partners, alongside the ROS/defence chemistry that tunes the relationship. The
 signal's **organ specificity** (strongest in roots) is exactly what a microbe-mediated
-effect predicts: the rhizosphere is where host and microbe meet. That **three
-independent analyses** — our OSDR re-analysis, the transcriptome paper, and the
-microbiome paper — point the same way gives real confidence in the pattern.
+effect predicts: the rhizosphere is where host and microbe meet. Our OSDR re-analysis,
+the transcriptome paper and the microbiome paper point the same way, though the first
+two rest on the same RNA-seq data, so they are not fully independent.
 
 Biologically, this hints at a **plant–microbe feedback in space**: a flight-altered
 rhizosphere rich in N-fixers could help support the crop's nutrition, while the host's
@@ -429,8 +430,8 @@ beneficial, neutral, or a stress response remains open.
   paper's reported results (per-sample matrices aren't deposited), so taxa beyond
   those named aren't analysed here — OSDR serves OSD-766 as raw reads only, a FAIR
   *Reusability* gap that keeps the direct per-taxon test pending.
-- **One experiment.** VEG-05 is a single mission; cross-flight reproducibility (as we
-  demonstrated for the *Arabidopsis* transcriptome) remains to be tested for tomato.
+- **One experiment.** VEG-05 is a single mission; cross-flight reproducibility (only
+  weak for the *Arabidopsis* transcriptome; see the data story) remains to be tested for tomato.
 
 ### Conclusion & next step
 

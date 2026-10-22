@@ -26,7 +26,7 @@ narrative. We:
 
 1. assemble a **panel of independent *Arabidopsis* spaceflight RNA-seq studies**,
 2. compute one common metric — the **spaceflight log₂ fold-change** per gene,
-3. ask how well the studies **agree**, and which genes form a **reproducible core**,
+3. ask how well the studies **agree**, and which genes change **consistently**,
 4. then meet the **DNA-methylation (epigenetic) studies** that add the next layer.
 
 > 🚀 Open this page in Binder/Colab (rocket icon) to re-run and extend the story.""")
@@ -47,8 +47,9 @@ PANEL = ["OSD-120", "OSD-37", "OSD-38", "OSD-321", "OSD-281", "OSD-427", "OSD-21
 
 md("""## 1. The cast — independent spaceflight experiments
 
-Each of these is a separate *Arabidopsis* spaceflight transcriptomics study from a
-different team, mission, and year — the perfect test of reproducibility.""")
+Each of these is a separate *Arabidopsis* spaceflight transcriptomics study. They span
+five missions (SpaceX-3, -4, -5, -10 and -12) and several years, but they are not all
+independent: OSD-38, OSD-217 and OSD-281 all flew on SpaceX-5.""")
 
 code('''def normalized_counts(acc):
     """Download a study's GeneLab normalized-counts table."""
@@ -134,11 +135,13 @@ fig = px.scatter(lfc_mat, x=a, y=b, opacity=0.25,
 fig.update_layout(height=480)
 fig.show()''')
 
-md("""## 4. The reproducible core
+md("""## 4. A candidate core
 
 Which genes respond to spaceflight **consistently** — same direction, strong
-effect — across the panel? Those are the robust core of the *Arabidopsis*
-spaceflight transcriptome.""")
+effect — across the panel? Those are candidates for a shared core of the
+*Arabidopsis* spaceflight transcriptome. The cut-off below (same sign in ≥80 % of
+studies, top 25 by mean effect) has not been tested against a null model, so treat
+the list as a shortlist, not a confirmed core.""")
 
 code('''mean_lfc = lfc_mat.mean(axis=1)
 sign_agreement = np.sign(lfc_mat).eq(np.sign(mean_lfc), axis=0).mean(axis=1)
@@ -187,28 +190,32 @@ to — the data is there in OSDR, waiting.
 
 ### Key results
 
-- **Reproducible across independent studies.** Seven *Arabidopsis* spaceflight
+- **Weak, mixed agreement across studies.** Seven *Arabidopsis* spaceflight
   RNA-seq experiments (OSD-120, 37, 38, 321, 281, 427, 217) were compared over
-  **21,527 shared genes**. Their genome-wide spaceflight log₂ fold-changes were
-  **positively correlated**, the best-correlated pair reaching **Pearson r = 0.50** —
-  substantial agreement for independent missions, teams and ecotypes.
-- **A reproducible core.** Twenty-five genes responded in a **consistent direction
-  across ≥80 % of the studies** — the robust backbone of the *Arabidopsis*
-  spaceflight transcriptome.
-- **Context adds scatter.** Pairwise agreement varied; the spread tracks differences
-  in ecotype, organ, light recipe and mission.
+  **21,527 shared genes**. Of the 21 study pairs, 14 had positively correlated
+  spaceflight log₂ fold-changes and 7 negatively, with a median of only
+  **r = 0.05**. The best pair (OSD-37 vs OSD-217) reached **r = 0.50** and the worst
+  (OSD-120 vs OSD-321) **r = −0.27**; OSD-120 correlated negatively with four of its
+  six partners.
+- **A candidate core.** The 25 strongest of the genes that changed in a **consistent
+  direction across ≥80 % of the studies** form a shortlist for a shared spaceflight
+  response; it has not been tested against a null model.
+- **Context adds scatter.** Pairwise agreement varied widely. The studies differ in
+  design (ecotype, organ, light, hardware), and one pooled metric cannot separate
+  those factors.
 - **A second molecular layer.** One panel member (**OSD-217**) carries matched
   DNA-methylation data, opening the epigenetic dimension explored in the next chapter.
 
 ### Discussion
 
-The positive cross-study correlation and the reproducible core show the *Arabidopsis*
-spaceflight transcriptome is **not a one-study artefact** — there is a real, repeatable
-signal that independent experiments recover. Yet the agreement is far from perfect
-(best pair r = 0.50), and that spread is informative: it reflects genuine
-**context-dependence** — the same plant responds differently with ecotype, tissue,
-light and hardware. The practical message for experiment design is that a "spaceflight
-gene set" should be defined **across** studies, not from any single one.
+Genome-wide, the studies agree only weakly: most pairs correlate positively, but the
+median correlation is close to zero and some pairs disagree outright. Some of the
+agreement that does exist may not be independent, since three of the seven studies
+(OSD-38, OSD-217, OSD-281) flew together on SpaceX-5. The spread is still
+informative: the studies differ in ecotype, tissue, light and hardware, and a pooled
+metric cannot tell those factors apart. The practical message for experiment design
+is that a "spaceflight gene set" should be defined **across** studies, with an
+explicit null model, not from any single one.
 
 ### Limitations
 
@@ -216,15 +223,20 @@ gene set" should be defined **across** studies, not from any single one.
   metric (mean flight/ground log₂FC), which smooths over within-study factors.
 - **Effect size, not significance** — the comparison ranks magnitude, not per-study
   statistical significance.
-- **Plant-specific** — reproducibility shown here is for *Arabidopsis*; other
-  organisms may differ.
+- **Plant-specific** — the comparison here is for *Arabidopsis*; other organisms
+  may differ.
+- **Shared missions** — OSD-38, OSD-217 and OSD-281 flew together on SpaceX-5, so
+  they are not fully independent replicates.
+- **No null model** — the candidate core uses a fixed cut-off without permutation
+  testing.
 
 ### Conclusion
 
-A consistent, reproducible *Arabidopsis* spaceflight transcriptome exists and is
-recoverable across OSDR's independent studies; the next frontier is **multi-omic** —
-pairing it with the epigenome (next chapter) and, for crops, the microbiome (tomato
-chapter). Every figure here was built live from the OSDR API — change `PANEL`, swap
+OSDR's *Arabidopsis* spaceflight studies share only a weak genome-wide signal, plus a
+shortlist of genes that change consistently across most of them. Testing that
+shortlist properly is the next step, and so is going **multi-omic** — pairing the
+transcriptome with the epigenome (next chapter) and, for crops, the microbiome
+(tomato chapter). Every figure here was built live from the OSDR API — change `PANEL`, swap
 organisms, or join other layers to extend the analysis.""")
 
 nb["cells"] = cells

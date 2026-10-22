@@ -44,8 +44,8 @@ all built live on the public
 ### Discoverability & FAIR — [`OSDR_FAIR_assessment.ipynb`](chapters/OSDR_FAIR_assessment.ipynb)
 | Deliverable | Status |
 | --- | --- |
-| Live FAIR scorecard over the repository (whole-repo + most-common-gap chart) | ✅ |
-| **Plant share of OSDR** (live: 70 / 640 = **10.9%**) + plant-subset drill-down (species, assay, factors, year) | ✅ |
+| Live FAIR scorecard (a 60-dataset sample per run, `MAX_DATASETS`; whole-repo scores are in [`OSDR_fair_over_time.ipynb`](chapters/OSDR_fair_over_time.ipynb)) + most-common-gap chart | ✅ |
+| **Plant share of OSDR** (70 / 640 = **10.9%** at the notebook's last run; the 2026-10-01 monthly snapshot counts 65 / 640 = 10.2%) + plant-subset drill-down (species, assay, factors, year) | ✅ |
 | Astrobotany FAIR view (FAIR scores for the plant subset) | ✅ |
 
 ### Interactive explorers & data stories
@@ -53,7 +53,7 @@ all built live on the public
 | --- | --- |
 | [`osdr-public-api.ipynb`](chapters/osdr-public-api.ipynb) — live, runnable API tour (replaced the static page, moved to the end) | ✅ |
 | [`OSDR_dataset_explorer.ipynb`](chapters/OSDR_dataset_explorer.ipynb) — drill-down: dataset → assays → samples → data → story | ✅ |
-| [`OSDR_data_story.ipynb`](chapters/OSDR_data_story.ipynb) — **cross-study** reproducibility across 7 *Arabidopsis* spaceflight studies | ✅ |
+| [`OSDR_data_story.ipynb`](chapters/OSDR_data_story.ipynb) — **cross-study** comparison of 7 *Arabidopsis* spaceflight studies | ✅ |
 | [`OSDR_methylation_layer.ipynb`](chapters/OSDR_methylation_layer.ipynb) — **epigenome × transcriptome** (OSD-217) + GO/KEGG enrichment | ✅ |
 | [`OSDR_tomato_microbiome.ipynb`](chapters/OSDR_tomato_microbiome.ipynb) — **host × microbiome** (VEG-05) + host functional enrichment | ✅ |
 | [`OSDR_tomato_microbiome_pipeline.ipynb`](chapters/OSDR_tomato_microbiome_pipeline.ipynb) — raw 16S/ITS → genus table → host-link **recipe** | ✅ |
@@ -70,12 +70,12 @@ experiment** ([OSD-120](https://osdr.nasa.gov/bio/repo/data/studies/OSD-120),
 
 | Item | Status | Notes |
 | --- | --- | --- |
-| Remove stale root files | ✅ **done** | Deleted old `_config.yml`/`_toc.yml`, `.readthedocs.yaml`, `SUMMARY.*`, all root `*.html`, and stale root build dirs. Root is now just docs + `chapters/`, `binder/`, `.github/`. |
+| Remove stale root files | ✅ **done** | Deleted old `_config.yml`/`_toc.yml`, `.readthedocs.yaml`, `SUMMARY.*`, all root `*.html`, and stale root build dirs. Root now holds the docs, `chapters/`, `binder/`, `.github/`, `reports/` (notebook error logs), `OSDR_assest_slides/`, packaging files and logos. |
 | `CITATION.cff` | ✅ **done** | [`CITATION.cff`](CITATION.cff) (CC0-1.0). |
 | Contributor guide | ✅ **done** | [`CONTRIBUTING.md`](CONTRIBUTING.md). |
 | GitHub Pages enabled | ✅ **confirmed** | Source: GitHub Actions; CI deploys on push to `main`. |
 | Zenodo DOI | ⚠️ **ready to mint** | `.zenodo.json` + [`RELEASE.md`](RELEASE.md) are in place — turn on the Zenodo↔GitHub hook and cut a `v1.0` release to get the DOI, then drop it into `CITATION.cff` + README. |
-| Quantitative tomato microbiome | ⚠️ recipe + FAIR write-up | OSD-766 is **raw 16S/ITS only**; the [pipeline notebook](chapters/OSDR_tomato_microbiome_pipeline.ipynb) produces real genus abundances in a DADA2/QIIME2 env, and the [tomato chapter](chapters/OSDR_tomato_microbiome.ipynb) §5 FAIR check quantifies the reuse gap. |
+| Quantitative tomato microbiome | ⚠️ recipe only | OSD-766 is **raw 16S/ITS only**; the [pipeline notebook](chapters/OSDR_tomato_microbiome_pipeline.ipynb) is a DADA2/QIIME2 recipe for building genus abundances but has not been run here, and the [tomato chapter](chapters/OSDR_tomato_microbiome.ipynb) §5 maps the published flight-shifted genera onto documented plant–microbe interactions (a curated, knowledge-based heatmap). |
 | Submitter "improve your FAIRness" reports | ✅ **done** | [`OSDR_fairness_report.ipynb`](chapters/OSDR_fairness_report.ipynb) — per-dataset report card + prioritised, actionable fixes. |
 | Scheduled full-repo FAIR scoring over time | ✅ **done** | [`OSDR_fair_over_time.ipynb`](chapters/OSDR_fair_over_time.ipynb) + [`_fair_snapshot.py`](chapters/_fair_snapshot.py) + a monthly cron workflow. First snapshot: 640 datasets, FAIR overall **91.0** (Reusable 69.3 = the gap). |
 
@@ -83,19 +83,19 @@ experiment** ([OSD-120](https://osdr.nasa.gov/bio/repo/data/studies/OSD-120),
 
 ## 🔑 Key scientific findings so far
 
-- **OSDR exposes 640 datasets**; **plants are ~10.9%** (live), overwhelmingly *Arabidopsis*.
-- The API metadata has **no licence field** → FAIR criterion **R1.1 fails repository-wide** (a real, actionable reuse gap).
-- The *Arabidopsis* **spaceflight transcriptome is reproducible** across 7 independent studies (positive cross-study correlation; a consistent "core" responds in the same direction).
-- **Epigenome × transcriptome (OSD-217):** genome-wide methylation–expression coupling is *weak* (as expected in plants); the multi-omic hit genes enrich for **photosynthesis / light-harvesting** and **desiccation / high-light stress** — a coordinated light/energy response in roots.
-- **Tomato (VEG-05):** the host root spaceflight response enriches for **phenylpropanoid & flavonoid biosynthesis, ROS metabolism, stress** — the plant→microbe signalling/defence pathways that bridge to the **PGPR-rich flight microbiome** (*Rhizobium, Azospirillum, Burkholderia*) documented in OSD-766.
+- **OSDR exposes ~640 datasets**; **plants are ~10%** (65–70 of 640 across runs), overwhelmingly *Arabidopsis*.
+- The API metadata shows **no licence field** in the records checked, so the rubric scores FAIR criterion **R1.1** as failing for every dataset (`_fair_snapshot.py` sets it to 0) — an actionable reuse gap, worth confirming with a full scan of the API.
+- The *Arabidopsis* **spaceflight transcriptome agrees only weakly across studies.** Over 7 studies, 14 of 21 study pairs correlate positively but the median r is 0.05 (best pair r = 0.50, OSD-37 vs OSD-217; worst −0.27). Three of the studies (OSD-38, OSD-217, OSD-281) flew on the same mission, SpaceX-5. The 25 genes changing in the same direction in ≥80% of studies are a candidate core, not yet tested against a null model.
+- **Epigenome × transcriptome (OSD-217):** genome-wide methylation–expression coupling is *weak* (as expected in plants); the multi-omic hit genes enrich for **photosynthesis / light-harvesting** and **desiccation / high-light stress**. The methylation data are from roots, but the expression contrast pools root and leaf samples (3 + 3 per arm), so these hits are not yet resolved by tissue.
+- **Tomato (VEG-05):** the 200 most strongly changed root genes in spaceflight (either direction) enrich for **phenylpropanoid & flavonoid biosynthesis, ROS metabolism, stress** — plant→microbe signalling/defence pathways. The paired microbiome study (OSD-766; [NTRS 20240016407](https://ntrs.nasa.gov/citations/20240016407)) reports a **PGPR-rich flight microbiome**, with the *Rhizobium* and *Burkholderia* clades over eight-fold higher in red-rich flight samples.
 
 ---
 
 ## 📚 The book's contents
 
-**Part 1 — Interactive FAIR assessment** · `OSDR_FAIR_assessment.ipynb`
+**Part 1 — Interactive FAIR assessment** · `OSDR_FAIR_assessment.ipynb` · `OSDR_fairness_report` · `OSDR_fair_over_time`
 
-**Part 2 — Introduction to OSDR & data access** · `how-to-access-data-in-the-osdr` · `osdr-data-visualization-portal` · `environmental-data-for-space-biology-experiments` · `radlab-overview` · `open-science-abbreviations`
+**Part 2 — Introduction to OSDR & data access** · `how-to-access-data-in-the-osdr` · `osdr-data-visualization-portal` · `environmental-data-for-space-biology-experiments` · `radlab-overview` · `OSDR_radlab_astrobotany` · `open-science-abbreviations`
 
 **Part 3 — Demo notebooks (the CARA *Arabidopsis* arc)**
 
@@ -110,7 +110,7 @@ experiment** ([OSD-120](https://osdr.nasa.gov/bio/repo/data/studies/OSD-120),
 | `Methods`, `Methods_Lesson_01` | Shared AI/ML method library, on OSD-120 |
 | `PubMed_scraping…`, `Knowledge-graph…` | Literature + knowledge-graph figures |
 
-**Part 4 — Interactive explorers & data stories** · `osdr-public-api` · `OSDR_dataset_explorer` · `OSDR_data_story` · `OSDR_methylation_layer` · `OSDR_tomato_microbiome` · `OSDR_tomato_microbiome_pipeline`
+**Part 4 — Interactive explorers & data stories** · `osdr-public-api` · `OSDR_dataset_explorer` · `OSDR_data_story` · `OSDR_arabidopsis_microarray` · `OSDR_methylation_layer` · `OSDR_tomato_microbiome` · `OSDR_tomato_microbiome_pipeline`
 
 ---
 
@@ -141,9 +141,9 @@ jupyter nbconvert --to notebook --execute --inplace OSDR_FAIR_assessment.ipynb
 
 ## ⚠️ Honest data limitations
 
-- **OSD-766 microbiome:** raw 16S/ITS only — no processed taxonomy via the API; the tomato host↔microbe link is **group-level / hypothesis-generating** (host & microbiome are different sample sets). Community composition is cited from the published study; the pipeline notebook generates real abundances when run in a bioinformatics env.
+- **OSD-766 microbiome:** raw 16S/ITS only — no processed taxonomy via the API; the tomato host↔microbe link is **group-level / hypothesis-generating** (host & microbiome are different sample sets). Community composition is cited from the published study (NTRS 20240016407, Figs 5–6); the pipeline notebook is a recipe that has not yet been run to produce abundances.
 - **OSD-767 tomato RNA-seq:** only *unnormalized* counts are served — the chapter normalises to CPM itself.
-- **Methylation:** only OSD-217 exposes processed WGBS; OSD-220/OSD-416 are raw-only.
+- **Methylation:** only OSD-217 exposes processed WGBS; OSD-416 is raw-only, and OSD-220 no longer resolves in the OSDR APIs (checked 2026-10-21).
 
 ---
 

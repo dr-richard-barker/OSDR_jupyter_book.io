@@ -15,11 +15,6 @@ description: >-
 Open the RadLab application
 ```
 
-```{note}
-When this page was last checked (21 October 2026) the RadLab application was
-returning a server error (HTTP 500). If the link fails, try again later.
-```
-
 The application provides a central repository for radiation data from a wide variety of sensors that have flown on various spacecraft. This makes it easy for users to find and access the data they need, regardless of the specific sensor or spacecraft that collected it.
 
 The OSDR RadLab application is also a powerful tool for data analysis. It provides a variety of features that allow users to visualize, analyze, and compare radiation data. This can be helpful for identifying trends and patterns in the data, as well as for understanding the effects of radiation on different materials and systems. Ionizing radiation is one of the defining environmental factors of spaceflight, and it affects all living organisms — including plants. For astrobotany researchers, the dose and timing of radiation a payload experienced is valuable context for interpreting how plants such as *Arabidopsis thaliana* responded during a mission.

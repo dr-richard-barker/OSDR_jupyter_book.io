@@ -45,7 +45,7 @@ all built live on the public
 | Deliverable | Status |
 | --- | --- |
 | Live FAIR scorecard (a 60-dataset sample per run, `MAX_DATASETS`; whole-repo scores are in [`OSDR_fair_over_time.ipynb`](chapters/OSDR_fair_over_time.ipynb)) + most-common-gap chart | ✅ |
-| **Plant share of OSDR** (70 / 640 = **10.9%** at the notebook's last run; the 2026-10-01 monthly snapshot counts 65 / 640 = 10.2%) + plant-subset drill-down (species, assay, factors, year) | ✅ |
+| **Plant share of OSDR** (66 / 640 = **10.3%** at the notebook's last run, 2026-10-24; the 2026-10-01 monthly snapshot counts 65 / 640 = 10.2%) + plant-subset drill-down (species, assay, factors, year) | ✅ |
 | Astrobotany FAIR view (FAIR scores for the plant subset) | ✅ |
 
 ### Interactive explorers & data stories

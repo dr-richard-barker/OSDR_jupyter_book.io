@@ -56,7 +56,7 @@ all built live on the public
 | [`OSDR_data_story.ipynb`](chapters/OSDR_data_story.ipynb) — **cross-study** comparison of 7 *Arabidopsis* spaceflight studies | ✅ |
 | [`OSDR_methylation_layer.ipynb`](chapters/OSDR_methylation_layer.ipynb) — **epigenome × transcriptome** (OSD-217) + GO/KEGG enrichment | ✅ |
 | [`OSDR_tomato_microbiome.ipynb`](chapters/OSDR_tomato_microbiome.ipynb) — **host × microbiome** (VEG-05) + host functional enrichment | ✅ |
-| [`OSDR_tomato_microbiome_pipeline.ipynb`](chapters/OSDR_tomato_microbiome_pipeline.ipynb) — raw 16S/ITS → genus table → host-link **recipe** | ✅ |
+| [`OSDR_tomato_microbiome_pipeline.ipynb`](chapters/OSDR_tomato_microbiome_pipeline.ipynb) — raw 16S reads → DADA2 + SILVA genus table → comparison with the host | ✅ |
 
 ### Astrobotany conversion (the CARA *Arabidopsis* arc)
 All demo notebooks were re-authored from rodent spaceflight data to the **CARA
@@ -75,7 +75,7 @@ experiment** ([OSD-120](https://osdr.nasa.gov/bio/repo/data/studies/OSD-120),
 | Contributor guide | ✅ **done** | [`CONTRIBUTING.md`](CONTRIBUTING.md). |
 | GitHub Pages enabled | ✅ **confirmed** | Source: GitHub Actions; CI deploys on push to `main`. |
 | Zenodo DOI | ⚠️ **ready to mint** | `.zenodo.json` + [`RELEASE.md`](RELEASE.md) are in place — turn on the Zenodo↔GitHub hook and cut a `v1.0` release to get the DOI, then drop it into `CITATION.cff` + README. |
-| Quantitative tomato microbiome | ⚠️ recipe only | OSD-766 is **raw 16S/ITS only**; the [pipeline notebook](chapters/OSDR_tomato_microbiome_pipeline.ipynb) is a DADA2/QIIME2 recipe for building genus abundances but has not been run here, and the [tomato chapter](chapters/OSDR_tomato_microbiome.ipynb) §5 maps the published flight-shifted genera onto documented plant–microbe interactions (a curated, knowledge-based heatmap). |
+| Quantitative tomato microbiome | ✅ **16S done** (ITS not yet) | OSD-766 is **raw 16S/ITS only**; the [pipeline notebook](chapters/OSDR_tomato_microbiome_pipeline.ipynb) now builds a 16S genus table with DADA2 + SILVA 138.1 (scripts and outputs in [`chapters/data_tomato_16s/`](chapters/data_tomato_16s/)). Leaves are ~99% host chloroplast/mitochondrial reads, so only root tissues (20 samples) are analysed. Separately, the [tomato chapter](chapters/OSDR_tomato_microbiome.ipynb) §5 maps the published flight-shifted genera onto documented plant–microbe interactions (a curated, knowledge-based heatmap). |
 | Submitter "improve your FAIRness" reports | ✅ **done** | [`OSDR_fairness_report.ipynb`](chapters/OSDR_fairness_report.ipynb) — per-dataset report card + prioritised, actionable fixes. |
 | Scheduled full-repo FAIR scoring over time | ✅ **done** | [`OSDR_fair_over_time.ipynb`](chapters/OSDR_fair_over_time.ipynb) + [`_fair_snapshot.py`](chapters/_fair_snapshot.py) + a monthly cron workflow. First snapshot: 640 datasets, FAIR overall **91.0** (Reusable 69.3 = the gap). |
 
@@ -87,7 +87,7 @@ experiment** ([OSD-120](https://osdr.nasa.gov/bio/repo/data/studies/OSD-120),
 - The API metadata shows **no licence field** in the records checked, so the rubric scores FAIR criterion **R1.1** as failing for every dataset (`_fair_snapshot.py` sets it to 0) — an actionable reuse gap, worth confirming with a full scan of the API.
 - The *Arabidopsis* **spaceflight transcriptome agrees only weakly across studies.** Over 7 studies, 14 of 21 study pairs correlate positively but the median r is 0.05 (best pair r = 0.50, OSD-37 vs OSD-217; worst −0.27). Three of the studies (OSD-38, OSD-217, OSD-281) flew on the same mission, SpaceX-5. The 25 genes changing in the same direction in ≥80% of studies are a candidate core, not yet tested against a null model.
 - **Epigenome × transcriptome (OSD-217):** genome-wide methylation–expression coupling is *weak* (as expected in plants); the multi-omic hit genes enrich for **photosynthesis / light-harvesting** and **desiccation / high-light stress**. The methylation data are from roots, but the expression contrast pools root and leaf samples (3 + 3 per arm), so these hits are not yet resolved by tissue.
-- **Tomato (VEG-05):** the 200 most strongly changed root genes in spaceflight (either direction) enrich for **phenylpropanoid & flavonoid biosynthesis, ROS metabolism, stress** — plant→microbe signalling/defence pathways. The paired microbiome study (OSD-766; [NTRS 20240016407](https://ntrs.nasa.gov/citations/20240016407)) reports a **PGPR-rich flight microbiome**, with the *Rhizobium* and *Burkholderia* clades over eight-fold higher in red-rich flight samples.
+- **Tomato (VEG-05):** the 200 most strongly changed root genes in spaceflight (either direction) enrich for **phenylpropanoid & flavonoid biosynthesis, ROS metabolism, stress** — plant→microbe signalling/defence pathways. The paired microbiome study (OSD-766; [NTRS 20240016407](https://ntrs.nasa.gov/citations/20240016407)) reports a **PGPR-rich flight microbiome**, with the *Rhizobium* and *Burkholderia* clades over eight-fold higher in red-rich flight samples. The pipeline chapter's DADA2 re-analysis of the root tissues agrees on the *Burkholderia* clade, *Azospirillum* and *Dyadobacter* (higher in flight) and *Herbaspirillum* (lower); for the *Rhizobium* clade the result depends on taxonomic confidence, because the main flight variant matches it at only 46% bootstrap support.
 
 ---
 
@@ -141,7 +141,7 @@ jupyter nbconvert --to notebook --execute --inplace OSDR_FAIR_assessment.ipynb
 
 ## ⚠️ Honest data limitations
 
-- **OSD-766 microbiome:** raw 16S/ITS only — no processed taxonomy via the API; the tomato host↔microbe link is **group-level / hypothesis-generating** (host & microbiome are different sample sets). Community composition is cited from the published study (NTRS 20240016407, Figs 5–6); the pipeline notebook is a recipe that has not yet been run to produce abundances.
+- **OSD-766 microbiome:** raw 16S/ITS only — no processed taxonomy via the API; the tomato host↔microbe link is **group-level / hypothesis-generating** (host & microbiome are different sample sets). The tomato chapter cites community composition from the published study (NTRS 20240016407, Figs 5–6); the pipeline notebook builds a 16S genus table for root tissues from the raw reads (leaf samples are ~99% host organelle reads and fail its depth filter).
 - **OSD-767 tomato RNA-seq:** only *unnormalized* counts are served — the chapter normalises to CPM itself.
 - **Methylation:** only OSD-217 exposes processed WGBS; OSD-416 is raw-only, and OSD-220 no longer resolves in the OSDR APIs (checked 2026-10-21).
 

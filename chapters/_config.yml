@@ -25,6 +25,7 @@ exclude_patterns:
   - Introduction.md
   - README.md
   - data_arabidopsis_microarray/*
+  - data_tomato_16s/*
 
 # Where the book lives on the web (powers the edit / issue / repo buttons)
 repository:

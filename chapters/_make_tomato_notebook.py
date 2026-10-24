@@ -369,9 +369,10 @@ microbes that interact with precisely the functions the host changes — with th
 This is a **knowledge-based mapping** of the two datasets' *directions* onto documented
 plant–microbe biology — it shows the layers are *positioned* to interact, not that they
 do so in these specific plants. The per-sample test (which microbe abundances actually
-track which host genes) needs the processed genus table; the
-[processing chapter](OSDR_tomato_microbiome_pipeline.ipynb) builds it and ranks the
-candidates with `rf_host_association()`.
+track which host genes) needs host and microbiome data from the same plants, which
+VEG-05 does not have. The [processing chapter](OSDR_tomato_microbiome_pipeline.ipynb)
+builds a genus table from the raw reads and compares these genera between flight and
+ground roots.
 ```""")
 
 md(r"""## 6. Results and discussion
@@ -426,10 +427,11 @@ beneficial, neutral, or a stress response remains open.
 - **Association, not causation.** Host and microbiome were measured on **different
   sample sets**, so the link is at the **biological / group level**, not a per-sample
   correlation — we cannot yet attribute host changes to specific microbes.
-- **Figure-level microbiome data.** The differential abundance is transcribed from the
-  paper's reported results (per-sample matrices aren't deposited), so taxa beyond
-  those named aren't analysed here — OSDR serves OSD-766 as raw reads only, a FAIR
-  *Reusability* gap that keeps the direct per-taxon test pending.
+- **Figure-level microbiome data.** The differential abundance here is transcribed from
+  the paper's reported results, because OSDR serves OSD-766 as raw reads only (a FAIR
+  *Reusability* gap). The [processing chapter](OSDR_tomato_microbiome_pipeline.ipynb)
+  rebuilds a genus table from those reads; in root tissues it agrees with the paper on
+  the *Burkholderia* clade, *Azospirillum*, *Dyadobacter* and *Herbaspirillum*.
 - **One experiment.** VEG-05 is a single mission; cross-flight reproducibility (only
   weak for the *Arabidopsis* transcriptome; see the data story) remains to be tested for tomato.
 
@@ -437,10 +439,10 @@ beneficial, neutral, or a stress response remains open.
 
 VEG-05 shows a tomato crop **re-tuning its root chemistry toward plant–microbe
 engagement** while its **rhizosphere shifts toward growth-promoting bacteria** in
-spaceflight. The direct, per-taxon × per-gene test is one step away: processing
-OSD-766's raw amplicon (the [pipeline notebook](OSDR_tomato_microbiome_pipeline.ipynb))
-produces the genus table that `link_microbe_to_host()` (section 4) turns into
-quantitative host↔microbe correlations.
+spaceflight. The [pipeline notebook](OSDR_tomato_microbiome_pipeline.ipynb) now builds
+the genus table from OSD-766's raw reads. A per-taxon × per-gene correlation with
+`link_microbe_to_host()` (section 4) still needs host and microbiome measured on the same
+plants, or at least on more shared groups than this design provides.
 
 ---
 

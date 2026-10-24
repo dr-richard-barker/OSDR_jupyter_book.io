@@ -1,7 +1,7 @@
-"""Generate `OSDR_tomato_microbiome_pipeline.ipynb` — the processing recipe that
-turns OSD-766's raw 16S/ITS reads into a genus abundance table and joins it to the
-OSD-767 host transcriptome. Light steps run live; heavy steps (DADA2/SILVA) are
-documented code for a dedicated bioinformatics environment.
+"""Generate `OSDR_tomato_microbiome_pipeline.ipynb` — turns OSD-766's raw 16S reads into a
+genus abundance table and sets it beside the OSD-767 host transcriptome. The heavy step
+(DADA2 + SILVA) is run with the scripts in data_tomato_16s/, whose outputs are committed;
+the book reads those outputs and runs the light steps live.
 Run: python _make_tomato_pipeline_notebook.py
 """
 import nbformat as nbf
@@ -15,31 +15,32 @@ md(r"""# 🧫 Processing the tomato microbiome → host integration
 
 The [tomato chapter](OSDR_tomato_microbiome.ipynb) paired the host transcriptome
 (OSD-767) with the microbiome study (OSD-766) but hit a wall: **OSDR serves
-OSD-766 as raw 16S/ITS reads — no processed taxonomy table**. This chapter is the
-**recipe to fix that**: turn the raw reads into a per-genus abundance table and
-feed it into the host↔microbe correlation.
+OSD-766 as raw 16S/ITS reads — no processed taxonomy table**. This chapter builds
+that table from the raw 16S reads (section 2) and sets it beside the host data.
 
 ```{admonition} What runs where — please read
 :class: important
-Amplicon denoising + taxonomy (DADA2 / QIIME2 + the SILVA database) needs heavy
-tools and ~1 GB of reads, so it is **not executed inside this book**. The cells
-below that *are* executed (live) **prove the data path and build the host side**;
-the heavy steps are given as **complete, copy-runnable code** to run once in a
-bioinformatics environment (a Binder/conda env with QIIME2 or R/DADA2). The
-output of that step drops straight into section 4.
+Denoising and taxonomy (DADA2 + the SILVA database) need R, about 330 MB of reads and
+a 137 MB reference, so they are **not executed inside this book**. They were run with
+the four scripts in
+[`data_tomato_16s/`](https://github.com/dr-richard-barker/OSDR_jupyter_book.io/tree/main/chapters/data_tomato_16s),
+and their outputs are committed next to them. The cells below read those outputs; the
+live cells check the data path and build the host side.
 ```
 
 ```{admonition} An honest design caveat
 :class: warning
-OSD-767 (host) and OSD-766 (microbes) are **different sample sets**, so the
-host↔microbe link is necessarily at the **experimental-group level**
-(organ × light × spaceflight), not sample-by-sample. With only a handful of
-groups this is **descriptive**, not a powered correlation — read it as
-hypothesis-generating.
+OSD-767 (host) and OSD-766 (microbes) are **different sample sets**, so host and
+microbes can only be compared at the **experimental-group level**, not sample by
+sample. Almost all leaf reads also turned out to come from the tomato's own chloroplasts
+and mitochondria (section 2),
+which leaves the root tissues as the only usable microbiome samples. Read the
+host–microbe comparison as descriptive and hypothesis-generating.
 ```""")
 
-code('''import io, re, gzip
+code('''import io, re, gzip, os
 import requests
+import numpy as np
 import pandas as pd
 
 API = "https://visualization.osdr.nasa.gov/biodata/api/v2"
@@ -68,76 +69,70 @@ one = next(o["file_name"] for o in fobjs
 blob = requests.get(f"{GEODE}/OSD-766/download?source=datamanager&file={one}", timeout=120).content
 lines = gzip.decompress(blob).decode("ascii", "replace").splitlines()
 print(f"file : {one}")
-print(f"reads: {len(lines)//4:,}   read length: {len(lines[1])} bp (16S V3-V4)")
+print(f"reads: {len(lines)//4:,}   read length: {len(lines[1])} bp")
 print(f"example read: {lines[1][:60]}...")''')
 
-md(r"""## 2. From reads to a genus table — run in a DADA2/QIIME2 environment
+md(r"""## 2. From reads to a genus table (DADA2 + SILVA)
 
-The block below is the **standard amplicon pipeline**. Run it once in an
-environment with `cutadapt` + R/`dada2` (or QIIME2). It writes
-`tomato_genus_by_sample.csv` (genera × samples), which section 4 consumes.
+The table was built with the scripts in `data_tomato_16s/`, run in this order:
 
 ```bash
-# 0. Download the 16S reads (R1+R2) for OSD-766 (~1 GB) into ./reads/
-python - <<'PY'
-import requests, json, os
-os.makedirs("reads", exist_ok=True)
-fobjs = requests.get("https://osdr.nasa.gov/osdr/data/osd/files/766").json()
-# (walk the JSON as in section 1, then:)
-for name in fastq_16S_names:                      # R1 + R2 for every 16S sample
-    url = f"https://osdr.nasa.gov/geode-py/ws/studies/OSD-766/download?source=datamanager&file={name}"
-    open(f"reads/{name}", "wb").write(requests.get(url).content)
-PY
-
-# 1. Remove the 515F/806R primers
-for f in reads/*_R1_raw.fastq.gz; do
-  r=${f/_R1_/_R2_}
-  cutadapt -g GTGYCAGCMGCCGCGGTAA -G GGACTACNVGGGTWTCTAAT \
-           -o trimmed/$(basename $f) -p trimmed/$(basename $r) "$f" "$r"
-done
+python download_reads.py ~/OSD-766-16S/reads     # 44 per-plant root, adventitious-root and leaf samples (88 FASTQ)
+python inspect_reads.py  ~/OSD-766-16S/reads     # primers? read length? where does quality drop?
+Rscript run_dada2.R ~/OSD-766-16S/reads silva_nr99_v138.1_train_set.fa.gz ~/OSD-766-16S/dada2 .
+python make_genus_table.py                       # sample sheet + relative-abundance table
 ```
 
-```r
-# 2. DADA2: denoise -> ASVs -> taxonomy (SILVA) -> collapse to genus  (in R)
-library(dada2)
-path <- "trimmed"
-fnF <- sort(list.files(path, "_R1_", full.names = TRUE))
-fnR <- sort(list.files(path, "_R2_", full.names = TRUE))
-filtF <- file.path("filt", basename(fnF)); filtR <- file.path("filt", basename(fnR))
-filterAndTrim(fnF, filtF, fnR, filtR, truncLen = c(220, 180), maxEE = c(2, 2))
-errF <- learnErrors(filtF); errR <- learnErrors(filtR)
-seqtab <- makeSequenceTable(mergePairs(dada(filtF, errF), filtF,
-                                       dada(filtR, errR), filtR))
-seqtab <- removeBimeraDenovo(seqtab)
-tax <- assignTaxonomy(seqtab, "silva_nr99_v138.1_train_set.fa.gz")   # SILVA DB
-# collapse ASV counts to genus and write genera x samples
-genus <- rowsum(t(seqtab), group = tax[, "Genus"])
-write.csv(genus, "tomato_genus_by_sample.csv")
-```""")
+What the inspection and the run found, and the settings used:
+
+- **No primers on the reads.** None of the common 16S primers occurs at the start of the
+  deposited reads, so there is no trimming step. Most merged amplicons are 253 bp (the
+  cell below), the length of the V4 region between the 515F and 806R primers.
+- **DADA2**: `truncLen = c(220, 180)`, `maxEE = c(2, 2)`, consensus chimera removal.
+- **Taxonomy**: SILVA 138.1 ([Zenodo 10.5281/zenodo.4587955](https://doi.org/10.5281/zenodo.4587955)),
+  with DADA2's default rule that a rank needs 50% bootstrap support to be named.
+- **Host organelles removed**: chloroplast and mitochondrial ASVs are dropped before the
+  reads are summed by genus.
+- **Depth filter**: a sample needs at least 1,000 bacterial reads to enter the analysis.
+
+The genus table holds each kept sample's relative abundance (% of its bacterial reads),
+so every column sums to 100 by construction.""")
+
+code('''samples = pd.read_csv("data_tomato_16s/samples.csv").set_index("sample")
+track = pd.read_csv("data_tomato_16s/read_tracking.csv").set_index("sample")
+asv = pd.read_csv("data_tomato_16s/asv_taxonomy.csv").set_index("asv")
+
+tot = track[["input", "filtered", "merged", "nonchim", "organelle", "bacterial"]].sum()
+print(f"Reads kept through DADA2: filtered {tot.filtered / tot.input:.0%}, merged {tot.merged / tot.input:.0%}, "
+      f"non-chimeric {tot.nonchim / tot.input:.0%} of {int(tot.input):,} input reads")
+print(f"Chloroplast/mitochondrial share of non-chimeric reads: {tot.organelle / tot.nonchim:.0%}")
+lens = asv["sequence"].str.len()
+by_len = asv.groupby(lens)["total_reads"].sum().sort_values(ascending=False)
+print(f"Merged amplicon length carrying most bacterial reads: {by_len.index[0]} bp "
+      f"({by_len.iloc[0] / by_len.sum():.0%} of them)")
+
+samples["organelle %"] = 100 * samples["organelle_reads"] / (samples["organelle_reads"] + samples["bacterial_reads"])
+summary = samples.groupby(["condition", "tissue"]).agg(
+    samples=("kept", "size"), kept=("kept", "sum"),
+    median_bacterial_reads=("bacterial_reads", "median"), median_organelle_pct=("organelle %", "median"))
+summary.round(1)''')
 
 md("""## 3. Map microbiome samples to experimental groups
 
-OSD-766's sample names encode the organ and flight/ground status, so the genus
-table can be summarised on the **same groups** as the host data.""")
+OSDR's metadata records each 16S sample's spaceflight and light factors;
+`make_genus_table.py` saved them in `data_tomato_16s/samples.csv`, and the tissue comes
+from the sample name. These are the samples that pass the depth filter:""")
 
-code('''# Parse organ + condition from the 16S sample names (real, live)
-rows = []
-for n in fq:
-    if "16S" not in n or "_R1" not in n:
-        continue
-    cond = "Flight" if re.search(r"VEG-05-F-", n) else ("Ground" if re.search(r"VEG-05-G-", n) else None)
-    organ = next((o for o in ("root", "leaf", "fruit", "soil", "wick", "swab") if o in n.lower()), "other")
-    rows.append({"file": n, "organ": organ, "condition": cond})
-mic_samples = pd.DataFrame(rows)
-print(mic_samples.groupby(["organ", "condition"]).size().rename("samples").reset_index().to_string(index=False))''')
+code('''kept = samples[samples["kept"]]
+print(kept.groupby(["tissue", "condition", "light"]).size().rename("samples").reset_index().to_string(index=False))''')
 
 md(r"""## 4. Join to the host transcriptome
 
-Here is the live host side plus the integration functions. Once
-`tomato_genus_by_sample.csv` exists (from section 2), the final cell computes **(a)** a
-group-level **genus ↔ host-gene correlation** and **(b)** a per-sample **random-forest
-ranking** (`rf_host_association`, the regression sibling of section 5's `rf_responders`)
-of which microbes best track the host's **spaceflight gene-module**.""")
+The host side runs live from OSD-767: per-group expression and a **spaceflight
+gene-module** (the 50 root genes that differ most between flight and ground). The
+microbiome side is the genus table from section 2. With leaves excluded, the microbes
+can be compared only within the two root tissues, so the cells below ask which genera
+differ between flight and ground roots.""")
 
 code('''# Host (OSD-767) expression, summarised per group  -- runs live
 counts = pd.read_csv(f"{GEODE}/OSD-767/download?source=datamanager"
@@ -150,71 +145,62 @@ groups = pd.DataFrame({c: parse(c) for c in cpm.columns}, index=["condition", "o
 host_group_mean = cpm.T.join(groups).groupby(["organ", "condition"]).mean(numeric_only=True)
 print(f"Host group means: {host_group_mean.shape[0]} groups x {host_group_mean.shape[1]} genes")
 
-def correlate_microbe_host(genus_by_group, host_by_group, genes):
-    """genus_by_group & host_by_group indexed by (organ, condition).
-    Returns genera x genes Pearson r across the shared groups."""
-    j = genus_by_group.join(host_by_group[genes], how="inner")
-    return j[genus_by_group.columns].apply(lambda t: j[genes].corrwith(t)).T
-
-# A host "spaceflight module": the top flight-vs-ground root genes, scored per group
+# A host "spaceflight module": the top flight-vs-ground root genes
 _organs = host_group_mean.index.get_level_values("organ")
 _root = host_group_mean.xs("Root", level="organ") if "Root" in _organs else host_group_mean
 if {"Flight", "Ground"}.issubset(set(_root.index)):
     _lfc = (_root.loc["Flight"] - _root.loc["Ground"]).abs().sort_values(ascending=False)
     module_genes = list(_lfc.head(50).index)
 else:
-    module_genes = list(host_group_mean.columns[:50])
-host_module = host_group_mean[module_genes].mean(axis=1).rename("host_spaceflight_module")
+    module_genes = list(host_group_mean.columns[:50])''')
 
-def rf_host_association(genus_by_sample, module_per_sample, n_estimators=400, seed=0):
-    """RF regression: which genera best predict a host gene-module score.
-    The regression sibling of rf_responders() (section 5) — point it at the per-sample
-    genus table and the host module each sample's group is expected to show."""
-    from sklearn.ensemble import RandomForestRegressor
-    rf = RandomForestRegressor(n_estimators=n_estimators, random_state=seed, oob_score=True)
-    rf.fit(genus_by_sample.values, module_per_sample.values)
-    return rf, pd.Series(rf.feature_importances_, index=genus_by_sample.columns).sort_values(ascending=False)''')
+code('''# The genus table from section 2: relative abundance (% of bacterial reads), genera x samples
+from scipy.stats import mannwhitneyu
+genus = pd.read_csv("tomato_genus_by_sample.csv", index_col=0)
+meta = samples.loc[genus.columns]
+roots = meta[meta["tissue"].isin(["root", "adventitious root"])]
+print(f"{genus.shape[0]} genera x {genus.shape[1]} samples; root tissues: {len(roots)} samples "
+      f"(flight {int((roots.condition == 'Flight').sum())}, ground {int((roots.condition == 'Ground').sum())})")
 
-code('''# Final step — runs for real ONCE the genus table from section 2 is present
-import os
-if os.path.exists("tomato_genus_by_sample.csv"):
-    genus = pd.read_csv("tomato_genus_by_sample.csv", index_col=0)
-    g = genus.T
-    g["organ"] = [next((o for o in ("root","leaf","fruit","soil","wick","swab") if o in s.lower()), "other") for s in g.index]
-    g["condition"] = ["Flight" if "-F-" in s else "Ground" for s in g.index]
-    # group keyed by Title-case organ so it aligns with the host index ("Root"/"Leaf")
-    genus_by_group = g.groupby([g["organ"].str.title(), "condition"]).mean(numeric_only=True)
+# The genera the VEG-05 microbiome preprint names, flight vs ground, in each root tissue (SILVA names)
+NAMED = {"Allorhizobium-Neorhizobium-Pararhizobium-Rhizobium": "Rhizobium clade",
+         "Burkholderia-Caballeronia-Paraburkholderia": "Burkholderia clade",
+         "Azospirillum": "Azospirillum", "Dyadobacter": "Dyadobacter", "Sphingomonas": "Sphingomonas",
+         "Methylobacterium-Methylorubrum": "Methylobacterium", "Massilia": "Massilia",
+         "Curtobacterium": "Curtobacterium", "Herbaspirillum": "Herbaspirillum"}
+rows = []
+for tissue in ("root", "adventitious root"):
+    f = roots.index[(roots.tissue == tissue) & (roots.condition == "Flight")]
+    g = roots.index[(roots.tissue == tissue) & (roots.condition == "Ground")]
+    for silva, label in NAMED.items():
+        a, b = genus.loc[silva, f], genus.loc[silva, g]
+        rows.append({"tissue": tissue, "genus": label, "n (F vs G)": f"{len(f)} vs {len(g)}",
+                     "flight %": a.mean(), "ground %": b.mean(),
+                     "log2 F/G": np.log2((a.mean() + 0.01) / (b.mean() + 0.01)),
+                     "p (Mann-Whitney)": mannwhitneyu(a, b).pvalue})
+named = pd.DataFrame(rows)
+named.round(3)''')
 
-    # (a) group-level correlation of the PGPR genera with the most variable host root genes
-    pgpr = [c for c in genus.index
-            if c in ("Rhizobium","Azospirillum","Burkholderia","Dyadobacter","Sphingomonas")]
-    top_genes = host_group_mean.loc[("Root",)].std().sort_values(ascending=False).head(30).index
-    print("(a) Group-level PGPR x host-gene correlation:")
-    print(correlate_microbe_host(genus_by_group[pgpr], host_group_mean, list(top_genes)).round(2))
+md(r"""The **Rhizobium clade** needs care. Flight and ground plants carry *different*
+Rhizobiaceae sequence variants (ASVs), and SILVA can name the flight one only with low
+confidence:""")
 
-    # (b) per-sample random forest: which microbes track the host spaceflight module?
-    g["host_module"] = [host_module.get((o.title(), c)) for o, c in zip(g["organ"], g["condition"])]
-    sub = g[g["organ"].isin(["root", "leaf"])].dropna(subset=["host_module"])
-    rf, imp = rf_host_association(sub[list(genus.index)], sub["host_module"])
-    print(f"\\n(b) rf_host_association (OOB R2 = {rf.oob_score_:.2f}) — "
-          f"microbes most predictive of the host spaceflight module:")
-    print(imp.head(10).round(3))
-else:
-    print("Run section 2 to create tomato_genus_by_sample.csv, then re-run this cell for:")
-    print("  (a) group-level PGPR x host-gene correlation, and")
-    print("  (b) rf_host_association() — RF ranking of microbes by association with the")
-    print("      host spaceflight gene-module (the regression sibling of section 5's rf_responders).")''')
+code('''# Rhizobiaceae ASVs: genus as assigned (50% bootstrap rule), best guess, support, and reads by condition
+asv_counts = pd.read_csv("data_tomato_16s/asv_counts.csv", index_col=0)
+fl = samples.index[samples.condition == "Flight"]; gr = samples.index[samples.condition == "Ground"]
+rz = asv[asv["Family"] == "Rhizobiaceae"].copy()
+rz["flight reads"] = asv_counts.loc[rz.index, fl].sum(axis=1)
+rz["ground reads"] = asv_counts.loc[rz.index, gr].sum(axis=1)
+rz[["Genus", "best_genus", "genus_bootstrap", "flight reads", "ground reads"]].sort_values("flight reads", ascending=False)''')
 
 md(r"""## 5. Results
 
-We present the chapter's data graphically. The **reported responders** (bar) and the
-**host response** (box) are *real*; the integration views (RF importance bar, scatter)
-are demonstrated on a **simulated** community — clearly marked — because the processed
-genus table isn't public yet; the **interaction Sankey** is a curated map of documented
-plant–microbe biology.""")
+The **reported responders** (bar) come from the VEG-05 microbiome preprint and the
+**host response** (box) from OSD-767. The **random forest** and the **strip plot** use the
+genus table built in section 2. The **interaction Sankey** is a curated map of
+documented plant–microbe biology.""")
 
-code('''import numpy as np
-import plotly.express as px
+code('''import plotly.express as px
 import plotly.graph_objects as go
 import plotly.io as pio
 pio.renderers.default = "notebook_connected"   # keep charts interactive in the static book''')
@@ -239,8 +225,7 @@ fig.show()''')
 
 md(r"""### Box — the host spaceflight gene-module (real, OSD-767)
 
-The host module (top flight-vs-ground root genes, section 4) scored per sample — the
-response the microbiome would engage.""")
+The host module (top flight-vs-ground root genes, section 4) scored per sample.""")
 
 code('''mps = cpm.loc[cpm.index.intersection(module_genes)].mean(axis=0)
 box_df = pd.DataFrame({"host module score": mps.values}, index=mps.index)
@@ -251,15 +236,12 @@ fig = px.box(box_df, x="organ", y="host module score", color="condition", points
 fig.update_layout(height=400)
 fig.show()''')
 
-md(r"""### Random forest + scatter — the integration, demonstrated
+md(r"""### Random forest — which genera separate flight from ground roots (real)
 
-```{admonition} Simulated — method check, not a result
-:class: warning
-The processed genus table isn't public yet, so the next two panels run on a **simulated**
-community with a planted spaceflight signal, to show the method works. The real numbers
-come from running `rf_responders()` / `rf_host_association()` (section 4) on the DADA2
-output of section 2.
-```""")
+A random forest trained on the root-tissue samples (roots and adventitious roots
+together) to tell flight from ground; the out-of-bag accuracy says how well it does on
+samples it did not train on. Flight has more adventitious-root samples than ground, so
+tissue and condition are partly confounded here.""")
 
 code('''def rf_responders(genus_by_sample, labels, n_estimators=400, seed=0):
     """RF importance: which genera best separate flight vs ground."""
@@ -268,38 +250,29 @@ code('''def rf_responders(genus_by_sample, labels, n_estimators=400, seed=0):
     rf.fit(genus_by_sample.values, np.asarray(labels))
     return rf, pd.Series(rf.feature_importances_, index=genus_by_sample.columns).sort_values(ascending=False)
 
-rng = np.random.default_rng(0)
-n_samples, n_genera = 48, 30
-labels = np.array(["Flight", "Ground"] * (n_samples // 2))
-X = rng.lognormal(2.0, 1.0, size=(n_samples, n_genera))
-planted = [3, 7, 12, 20, 25]
-for j in planted:
-    X[labels == "Flight", j] *= 4.0
-sim = pd.DataFrame(X, columns=[f"Genus_{i:02d}" for i in range(n_genera)])
-
-rf, imp = rf_responders(sim, labels)
-print(f"SIMULATED RF out-of-bag accuracy: {rf.oob_score_:.2f}")
+X = genus[roots.index].T
+rf, imp = rf_responders(X, roots["condition"])
+print(f"Root tissues, flight vs ground (n = {len(roots)}): out-of-bag accuracy {rf.oob_score_:.2f}")
 top = imp.head(12).rename_axis("genus").reset_index(name="importance")
-top["planted"] = top["genus"].isin([f"Genus_{j:02d}" for j in planted])
 fig = px.bar(top.sort_values("importance"), x="importance", y="genus", orientation="h",
-             color="planted", color_discrete_map={True: "#2e7d32", False: "#90a4ae"},
-             title="SIMULATED: RF importance recovers the planted spaceflight responders")
-fig.update_layout(height=420)
+             title="Genera that best separate flight from ground root tissues (random forest)")
+fig.update_layout(height=440)
 fig.show()''')
 
-code('''# Scatter: a planted flight-associated microbe vs a (simulated) host module, per sample
-sim_module = np.where(labels == "Flight", 1.0, 0.0) + rng.normal(0, 0.15, n_samples)
-scat = pd.DataFrame({"planted PGPR abundance": sim["Genus_03"],
-                     "host module (simulated)": sim_module, "condition": labels})
-fig = px.scatter(scat, x="planted PGPR abundance", y="host module (simulated)", color="condition",
-                 title="SIMULATED: a flight-associated microbe vs the host module (per sample)")
-fig.update_layout(height=400)
+md("### Strip plot — the named genera in each root sample (real)")
+
+code('''long = (genus.loc[list(NAMED), roots.index].rename(index=NAMED).T
+        .join(roots[["condition", "tissue"]]).melt(id_vars=["condition", "tissue"],
+                                                   var_name="genus", value_name="relative abundance (%)"))
+fig = px.strip(long, x="relative abundance (%)", y="genus", color="condition", facet_col="tissue",
+               title="Paper-named genera in each root-tissue sample (DADA2 + SILVA, this chapter)")
+fig.update_layout(height=460)
 fig.show()''')
 
 md(r"""### Sankey — how the flight-shifted microbes connect to the host response (curated)
 
 A knowledge-based map: flight-shifted **microbes** → their **functional traits** → the
-**host pathways** enriched in spaceflight (section 4). The flows converge on the
+**host pathways** enriched in spaceflight (the tomato chapter). The flows converge on the
 flavonoid/phenylpropanoid and ROS/defence axes.""")
 
 code('''micro = ["Rhizobium clade", "Azospirillum", "Burkholderia clade", "Sphingomonas",
@@ -329,47 +302,63 @@ fig.show()''')
 
 md(r"""## 6. Discussion
 
-Spaceflight reshaped the VEG-05 tomato rhizosphere toward **nitrogen-fixing and
-plant-growth-promoting (PGPR) bacteria** — the *Rhizobium*- and *Burkholderia*-clades and
-*Azospirillum* rose most (>8-fold for the two clades), while the endophytic diazotroph
-*Herbaspirillum* fell (VEG-05 microbiome study; differential abundance via DESeq2, Love
-*et al.*, 2014). A tilt toward beneficial, pathogen-free communities echoes earlier ISS
-crop work: lettuce grown in the same Veggie hardware carried no plant pathogens and a
-largely benign microbiota (Khodadad *et al.*, 2020).
+Building the genus table from OSD-766's raw reads lets this chapter test the microbiome
+side of the story directly. Within the root tissues, four of the VEG-05 preprint's
+findings hold up (section 4):
 
-Strikingly, the host met this shift with matching chemistry. The tomato **root**
-transcriptome up-regulated the **flavonoid and phenylpropanoid** pathways (this book's
-re-analysis of OSD-767, and the VEG-05 transcriptome paper) — the canonical molecules
-plants exude to **recruit and signal to rhizosphere bacteria** (Hassan & Mathesius, 2012).
-Flavonoids activate the colonisation and nodulation programmes of exactly the N-fixing
-partners the flight community is enriched for, making the **flavonoid ↔ rhizobia axis**
-(the Sankey's busiest hub) the clearest point of contact between the two datasets.
-*Azospirillum*, also enriched, promotes growth through phytohormones, nitrogen fixation
-and root proliferation rather than nodulation (Bashan & de-Bashan, 2010), consistent with
-the light- and root-dependent responses across VEG-05.
+- The ***Burkholderia* clade** is higher in flight in roots (18.7% vs 2.9% of bacterial
+  reads) and adventitious roots (38.0% vs 8.8%).
+- ***Azospirillum*** and ***Dyadobacter*** are higher in flight in both root tissues.
+- ***Herbaspirillum***, the one genus the preprint reports as lower in flight, is absent
+  from every flight root-tissue sample.
 
-The response was **organ-specific**: roots — the rhizosphere interface — carried the
-strongest, most distinct signal (the box plot), as expected if microbes are involved, and
-as seen for the *Arabidopsis* spaceflight transcriptome, which is likewise remodelled
-organ-by-organ (Paul *et al.*, 2013). A second meeting point, **reactive-oxygen-species /
-defence** chemistry, is the toolkit plants use to *tune* which microbes colonise the root
-surface.
+*Methylobacterium* and *Curtobacterium* lean higher in flight without reaching p < 0.05,
+and *Sphingomonas* and *Massilia* show no consistent direction, at these sample sizes
+(4 vs 4 roots, 9 vs 3 adventitious roots). The preprint's differential abundance used
+DESeq2 (Love *et al.*, 2014); the comparisons here are simpler, a Mann-Whitney test on
+relative abundance.
+
+**The *Rhizobium* clade is the exception, and the reason is taxonomic.** Flight and ground
+plants carry different Rhizobiaceae sequence variants. The ground variant (ASV7) is named
+*Rhizobium* clade with 95% bootstrap support. The main flight variant (ASV4, 15,898 reads,
+none on the ground) is closest to the same clade but with only 46% support, below DADA2's
+50% cut-off, so it stays unnamed at genus level. At genus level the clade therefore looks
+absent from flight and abundant on the ground, the reverse of the preprint, while
+Rhizobiaceae as a family are plentiful in both. The preprint classified with Greengenes2
+and pooled plant and non-plant samples in its differential-abundance plots, so the two
+analyses need not agree on this clade. Do not read it as a reversal of the preprint.
+
+A random forest separates flight from ground root tissues well (out-of-bag accuracy 0.95,
+20 samples). Its leading genera are *Xylophilus*, the *Rhizobium* clade (subject to the
+caveat above), *Chitinophaga*, *Paenarthrobacter* and *Dyadobacter*. But flight
+contributes 9 adventitious-root samples against 3 for ground, so tissue and condition
+are partly confounded: the forest shows that the communities differ, not which genus
+drives the difference.
+
+On the host side, the tomato root genes that change most in spaceflight (in either
+direction) enrich for flavonoid and phenylpropanoid biosynthesis (the tomato chapter).
+These are the molecules plants use to recruit and signal to rhizosphere bacteria (Hassan &
+Mathesius, 2012). With the *Burkholderia* clade and *Azospirillum*, a well-studied plant
+growth-promoting bacterium (Bashan & de-Bashan, 2010), higher on flight roots, that
+flavonoid–rhizobacteria axis is the clearest candidate point of contact between the two
+datasets. As in *Arabidopsis*, whose spaceflight transcriptome is remodelled organ by
+organ (Paul *et al.*, 2013), the signal here is organ-specific, and the microbes can only
+be read in roots. Earlier Veggie crops were screened too: lettuce grown in the same
+hardware tested negative for select human pathogens (Khodadad *et al.*, 2020).
 
 **How firmly can we call this causal?** Not yet. Host and microbiome were profiled on
-**different plants**, so the link is group-level; spaceflight simultaneously alters water
-films, temperature and the plant, any of which could drive a microbe's apparent
-importance; and plant→microbe and microbe→plant signalling run both ways. The random-forest
-framework here ranks candidate responders and host-tracking microbes (the simulated panels
-show it recovers a planted signal) — but converting association to causation needs
-**matched per-sample multi-omics** with **mediation analysis**, and ultimately
-**inoculation experiments** that add or omit a genus and watch the host. The value of this
-chapter is to reach that shortlist quickly and transparently.
+**different plants**, so the link is group-level. Most leaf samples carry too few bacterial
+reads to analyse, and the ground adventitious roots number only three. Spaceflight also
+changes water, temperature and the plant at once, any of which could move a microbe.
+Turning these associations into causes needs **matched per-sample host and microbiome
+data**, and ultimately **inoculation experiments** that add or omit a genus and watch the
+host.
 
 ### References
 
 - Bashan, Y. & de-Bashan, L. E. (2010) How the plant growth-promoting bacterium
   *Azospirillum* promotes plant growth — a critical assessment. *Advances in Agronomy*
-  **108**, 77–136.
+  **108**, 77–136. <https://doi.org/10.1016/S0065-2113(10)08002-8>
 - Hassan, S. & Mathesius, U. (2012) The role of flavonoids in root–rhizosphere signalling:
   opportunities and challenges for improving plant–microbe interactions. *Journal of
   Experimental Botany* **63**(9), 3429–3444.

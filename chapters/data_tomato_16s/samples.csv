@@ -1,0 +1,45 @@
+sample,condition,light,tissue,plant,input_reads,organelle_reads,bacterial_reads,kept
+103-VEG-05-G-tomato-SN-10-root_S101_L001,Ground,blue-rich,root,10,31846,13679,16286,True
+109-VEG-05F-SN01-leaf-tom-red-rich_S107_L001,Flight,red-rich,leaf,1,31890,29539,104,False
+110-VEG-05F-SN03-leaf-tom-red-rich_S108_L001,Flight,red-rich,leaf,3,24183,22377,301,False
+111-VEG-05F-SN04-leaf-tom-red-rich_S109_L001,Flight,red-rich,leaf,4,31284,29231,143,False
+112-VEG-05F-SN05-leaf-tom-red-rich_S110_L001,Flight,red-rich,leaf,5,23885,18113,4259,True
+113-VEG-05F-SN06-leaf-tom-red-rich_S111_L001,Flight,red-rich,leaf,6,32803,30678,100,False
+114-VEG-05F-SN07-leaf-tom-blue-rich_S112_L001,Flight,blue-rich,leaf,7,24216,22401,188,False
+115-VEG-05F-SN08-leaf-tom-blue-rich_S113_L001,Flight,blue-rich,leaf,8,23595,22024,151,False
+116-VEG-05F-SN010-leaf-tom-blue-rich_S114_L001,Flight,blue-rich,leaf,10,40994,38441,337,False
+117-VEG-05F-SN012-leaf-tom-blue-rich_S115_L001,Flight,blue-rich,leaf,12,30711,28485,466,False
+118-VEG-05F-SN01-AdvRoot-tom-red-rich_S116_L001,Flight,red-rich,adventitious root,1,27693,6940,18625,True
+119-VEG-05F-SN03-AdvRoot-tom-red-rich_S117_L001,Flight,red-rich,adventitious root,3,29960,2154,25292,True
+120-VEG-05F-SN04-AdvRoot-tom-red-rich_S118_L001,Flight,red-rich,adventitious root,4,30769,6846,21524,True
+121-VEG-05F-SN05-AdvRoot-tom-red-rich_S119_L001,Flight,red-rich,adventitious root,5,32178,15695,13800,True
+122-VEG-05F-SN06-AdvRoot-tom-red-rich_S120_L001,Flight,red-rich,adventitious root,6,37426,33024,2062,True
+123-VEG-05F-SN07-AdvRoot-tom-blue-rich_S121_L001,Flight,blue-rich,adventitious root,7,28877,18929,8010,True
+124-VEG-05F-SN08-AdvRoot-tom-blue-rich_S122_L001,Flight,blue-rich,adventitious root,8,30336,25737,2585,True
+125-VEG-05F-SN010-AdvRoot-tom-blue-rich_S123_L001,Flight,blue-rich,adventitious root,10,34707,12332,19877,True
+126-VEG-05F-SN012-AdvRoot-tom-blue-rich_S124_L001,Flight,blue-rich,adventitious root,12,28929,1584,24947,True
+127-VEG-05-G-SN-01-leaf-tom-red-rich_S125_L001,Ground,red-rich,leaf,1,33717,31819,70,False
+128-VEG-05-G-SN-02-leaf-tom-red-rich_S126_L001,Ground,red-rich,leaf,2,27257,25542,86,False
+129-VEG-05-G-SN-03-leaf-tom-red-rich_S127_L001,Ground,red-rich,leaf,3,37148,34992,54,False
+130-VEG-05-G-SN-04-leaf-tom-red-rich_S128_L001,Ground,red-rich,leaf,4,31034,29173,49,False
+131-VEG-05-G-SN-05-leaf-tom-red-rich_S129_L001,Ground,red-rich,leaf,5,27609,25954,54,False
+132-VEG-05-G-SN-06-leaf-tom-red-rich_S130_L001,Ground,red-rich,leaf,6,34852,32453,77,False
+133-VEG-05-G-SN-07-leaf-tom-blue-rich_S131_L001,Ground,blue-rich,leaf,7,32897,30669,68,False
+134-VEG-05-G-SN-08-leaf-tom-blue-rich_S132_L001,Ground,blue-rich,leaf,8,41585,39295,71,False
+135-VEG-05-G-SN-09-leaf-tom-blue-rich_S133_L001,Ground,blue-rich,leaf,9,34230,32094,73,False
+136-VEG-05-G-SN-10-leaf-tom-blue-rich_S134_L001,Ground,blue-rich,leaf,10,33010,31066,45,False
+137-VEG-05-G-SN-11-leaf-tom-blue-rich_S135_L001,Ground,blue-rich,leaf,11,33912,32000,66,False
+138-VEG-05-G-SN-12-leaf-tom-blue-rich_S136_L001,Ground,blue-rich,leaf,12,35371,33119,63,False
+139-VEG-05-G-SN-02-AdvRoots-tom-blue_S137_L001,Ground,blue-rich,adventitious root,2,31520,29821,107,False
+14-VEG-05-F-tomato-SN-07-root_S12_L001,Flight,blue-rich,root,7,49921,24407,21812,True
+140-VEG-05-G-SN-04-AdvRoots-tom-blue_S138_L001,Ground,blue-rich,adventitious root,4,29801,25788,2148,True
+141-VEG-05-G-SN-05-AdvRoots-tom-blue_S139_L001,Ground,blue-rich,adventitious root,5,38210,35936,81,False
+142-VEG-05-G-SN-07-AdvRoots-tom-blue_S140_L001,Ground,blue-rich,adventitious root,7,27993,12218,14182,True
+143-VEG-05-G-SN09-AdvRoots-tom-blue-rich_S141_L001,Ground,blue-rich,adventitious root,9,116,46,0,False
+144-VEG-05-G-SN-10-AdvRoots-tom-blue_S142_L001,Ground,blue-rich,adventitious root,10,30096,24337,3796,True
+19-VEG-05-F-tomato-SN-10-root_S17_L001,Flight,blue-rich,root,10,48365,25343,19685,True
+2-VEG-05-F-tomato-SN-01-root_S2_L001,Flight,red-rich,root,1,42597,16258,22849,True
+8-VEG-05-F-tomato-SN-03-root_S7_L001,Flight,red-rich,root,3,47951,21141,23070,True
+88-VEG-05-G-tomato-SN-01-root_S86_L001,Ground,red-rich,root,1,28673,12531,14058,True
+93-VEG-05-G-tomato-SN-03-root_S91_L001,Ground,red-rich,root,3,30182,10527,17444,True
+98-VEG-05-G-tomato-SN-07-root_S96_L001,Ground,blue-rich,root,7,37643,16756,18360,True
